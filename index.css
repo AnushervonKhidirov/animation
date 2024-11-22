@@ -1,0 +1,77 @@
+/* logos animation */
+.logo {
+    opacity: 0;
+}
+
+.logo.active {
+    animation: fadeIn 0.3s linear forwards;
+}
+
+/* logos animation */
+.cta {
+    opacity: 0;
+}
+
+.cta.active {
+    animation: fadeIn 0.3s linear forwards;
+}
+
+/* frames animation */
+.frame {
+    opacity: 0;
+    animation-duration: 0.4s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.frame.show {
+    opacity: 1;
+    animation-name: fadeIn;
+}
+
+.frame.hide {
+    opacity: 1;
+    animation-name: fadeOut;
+}
+
+/* frames inner elements animation */
+.frame > * {
+    opacity: 0;
+}
+
+.frame.hide > * {
+    opacity: 1;
+}
+
+.frame.show .text {
+    animation: fadeIn 0.3s linear 0.3s forwards;
+}
+
+.frame.show .sub-text {
+    animation: fadeIn 0.3s linear 0.6s forwards;
+}
+
+.frame.show .sub-sub-text {
+    animation: fadeIn 0.3s linear 0.9s forwards;
+}
+
+/* animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
