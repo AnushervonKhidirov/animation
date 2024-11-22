@@ -1,3 +1,5 @@
+const nextFrameEvent = new CustomEvent('showNextFrame')
+
 const animationWrapper = document.querySelector('#animation')
 const frames = document.querySelectorAll('.frame')
 const logos = document.querySelectorAll('.logo')
@@ -6,25 +8,19 @@ const ctaButtons = document.querySelectorAll('.cta')
 const frameAnimationDuration = parseFloat(window.getComputedStyle(frames[0]).animationDuration) * 1000
 const loopRotate = true
 const animationDelay = 1500
-
 const showLogosOnFrame = [[1, 3, 4], [2]]
 const showCtaButtonsOnFrame = [[1, 2, 4], [3]]
-
-const endAnimationEvent = new CustomEvent('shownextframe')
 
 let prevFrame = 0
 let currFrame = 0
 
-animationWrapper.addEventListener('shownextframe', nextFrame)
-nextFrame()
+animationWrapper.addEventListener('showNextFrame', nextFrame)
+animationWrapper.dispatchEvent(nextFrameEvent)
 
 function nextFrame() {
     if (currFrame >= frames.length) {
-        if (loopRotate) {
-            currFrame = 0
-        } else {
-            return
-        }
+        if (!loopRotate) return
+        currFrame = 0
     }
 
     hideFrame(currFrame, prevFrame)
@@ -60,7 +56,7 @@ function hideFrame(currFrame, prevFrame) {
 function logosHandler(currFrame) {
     if (logos.length === 0) return
     if (logos.length === 1) return logos[0].classList.add('active')
-    
+
     logos.forEach((logo, index) => {
         logo.classList.remove('active')
 
@@ -87,6 +83,6 @@ function nextFrameEventDispatch() {
     this.removeEventListener('animationend', nextFrameEventDispatch)
 
     setTimeout(() => {
-        animationWrapper.dispatchEvent(endAnimationEvent)
+        animationWrapper.dispatchEvent(nextFrameEvent)
     }, animationDelay)
 }
