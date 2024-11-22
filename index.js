@@ -58,6 +58,9 @@ function hideFrame(currFrame, prevFrame) {
 }
 
 function logosHandler(currFrame) {
+    if (logos.length === 0) return
+    if (logos.length === 1) return logos[0].classList.add('active')
+    
     logos.forEach((logo, index) => {
         logo.classList.remove('active')
 
@@ -68,6 +71,9 @@ function logosHandler(currFrame) {
 }
 
 function ctaButtonsHandler(currFrame) {
+    if (ctaButtons.length === 0) return
+    if (ctaButtons.length === 1) return ctaButtons[0].classList.add('active')
+
     ctaButtons.forEach((ctaBtn, index) => {
         ctaBtn.classList.remove('active')
 
