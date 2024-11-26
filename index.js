@@ -71,10 +71,18 @@ function ctaButtonsHandler(currFrame) {
     if (ctaButtons.length === 1) return ctaButtons[0].classList.add('active')
 
     ctaButtons.forEach((ctaBtn, index) => {
+        if (ctaBtn.classList.contains('active')) {
+            ctaBtn.classList.add('hide')
+        } else {
+            ctaBtn.classList.remove('hide')
+        }
+        
         ctaBtn.classList.remove('active')
+
 
         if (showCtaButtonsOnFrame[index].includes(currFrame + 1)) {
             ctaBtn.classList.add('active')
+            ctaBtn.classList.remove('hide')
         }
     })
 }
