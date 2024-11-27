@@ -80,6 +80,7 @@
 
 #animation {
     position: relative;
+    overflow: hidden;
 }
 
 /* logos animation */
@@ -90,11 +91,11 @@
 }
 
 .logo.hide {
-    animation: fadeOut 0.3s linear forwards;
+    animation: fadeOut 0.4s linear forwards;
 }
 
 .logo.active {
-    animation: fadeIn 0.3s linear forwards;
+    animation: fadeIn 0.4s linear forwards;
 }
 
 /* logos animation */
@@ -105,11 +106,11 @@
 }
 
 .cta.hide {
-    animation: fadeOut 0.3s linear forwards;
+    animation: fadeOut 0.4s linear forwards;
 }
 
 .cta.active {
-    animation: fadeInUp 0.3s linear 0.5s forwards;
+    animation: fadeInUp 0.4s linear 0.5s forwards;
 }
 
 /* frames animation */
@@ -143,40 +144,40 @@
     opacity: 1;
 }
 
-.frame.show > * {
+.frame.show.start-animation > * {
     animation-name: fadeInUp;
 }
 
 /* steps animation */
-.frame.show .step-0 {
+.step-0 {
     animation-delay: 0.5s;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
-.frame.show .step-1 {
+.step-1 {
     animation-delay: 1s;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
-.frame.show .step-2 {
+.step-2 {
     animation-delay: 1.5s;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
-.frame.show .step-3 {
+.step-3 {
     animation-delay: 2s;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
-.frame.show .step-4 {
+.step-4 {
     animation-delay: 2.5s;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;

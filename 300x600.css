@@ -1,0 +1,126 @@
+#animation {
+    width: 300px;
+    height: 600px;
+    background: url(images/300x600-bg.jpg) center no-repeat;
+    background-size: cover;
+}
+
+.logo {
+    background: url(images/300x600-logo.png) center no-repeat;
+    background-size: contain;
+}
+
+.cta[data-title="Shop Event"] {
+    background: url(images/300x600-cta-se.png) center no-repeat;
+    background-size: contain;
+}
+
+.cta[data-title="Learn More"] {
+    background: url(images/300x600-cta-lm.png) center no-repeat;
+    background-size: contain;
+}
+
+/* frame 0 */
+.frame-0 {
+    background: url(images/300x600-frame-0-bg.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-0 .bf-icon {
+    background: url(images/300x600-bf-icon.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-0 .text-0 {
+    background: url(images/300x600-frame-0-text-0.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-0 .text-1 {
+    background: url(images/300x600-frame-0-text-1.png) center no-repeat;
+    background-size: contain;
+}
+
+/* frame 1 */
+.frame-1 .text {
+    background: url(images/300x600-frame-1-text.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-1 .product-0 {
+    background: url(images/300x600-frame-1-product-0.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-1 .product-1 {
+    background: url(images/300x600-frame-1-product-1.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-1 .price-0 {
+    background: url(images/300x600-frame-1-price-0.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-1 .price-1 {
+    background: url(images/300x600-frame-1-price-1.png) center no-repeat;
+    background-size: contain;
+}
+
+/* frame 2 */
+.frame-2 .text {
+    background: url(images/300x600-frame-2-text.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-2 .product-0 {
+    background: url(images/300x600-frame-2-product-0.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-2 .product-1 {
+    background: url(images/300x600-frame-2-product-1.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-2 .price-0 {
+    background: url(images/300x600-frame-2-price-0.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-2 .price-1 {
+    background: url(images/300x600-frame-2-price-1.png) center no-repeat;
+    background-size: contain;
+}
+
+/* frame 3 */
+.frame-3 .text {
+    background: url(images/300x600-frame-3-text.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-3 .card {
+    background: url(images/300x600-frame-3-card.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-3 .small-text {
+    background: url(images/300x600-frame-3-small-text.png) center no-repeat;
+    background-size: contain;
+}
+
+/* frame 4 */
+.frame-4 .text {
+    background: url(images/300x600-frame-4-text.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-4 .products {
+    background: url(images/300x600-frame-4-products.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-4 .small-text {
+    background: url(images/300x600-frame-4-small-text.png) center no-repeat;
+    background-size: contain;
+}
