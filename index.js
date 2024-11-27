@@ -117,11 +117,25 @@ window.addEventListener(
 
                 if (frames[currFrame].getAttribute('data-cta') === ctaBtn.getAttribute('data-title')) {
                     if (ctaBtn.getAttribute('data-title') !== prevCta) {
-                        setTimeout(() => {
-                            animationWrapper.dispatchEvent(startAnimationEvent)
-                        }, stepsAnimationDelay)
+                        if (showCtaFirst) {
+                            setTimeout(() => {
+                                animationWrapper.dispatchEvent(startAnimationEvent)
+                            }, stepsAnimationDelay)
+                        }
+
+                        if (!showCtaFirst) {
+                            setTimeout(() => {
+                                animationWrapper.dispatchEvent(nextFrameEvent)
+                            }, animationDelay + frameAnimationDuration)
+                        }
                     } else {
-                        animationWrapper.dispatchEvent(startAnimationEvent)
+                        if (showCtaFirst) animationWrapper.dispatchEvent(startAnimationEvent)
+
+                        if (!showCtaFirst) {
+                            setTimeout(() => {
+                                animationWrapper.dispatchEvent(nextFrameEvent)
+                            }, animationDelay)
+                        }
                     }
 
                     ctaBtn.classList.add('active')
@@ -165,10 +179,6 @@ window.addEventListener(
             this.removeEventListener('animationend', showCtaEventDispatch)
 
             ctaButtonsHandler(this.currFrame)
-
-            setTimeout(() => {
-                animationWrapper.dispatchEvent(nextFrameEvent)
-            }, animationDelay)
         }
     },
     false,
