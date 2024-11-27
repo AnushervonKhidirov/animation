@@ -1,3 +1,4 @@
+// NOTE: add this code to script tag in index.html
 window.addEventListener(
     'load',
     () => {

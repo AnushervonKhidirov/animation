@@ -1,4 +1,6 @@
-/* animations */
+/*
+	animations
+   ================ */
 @keyframes fadeIn {
     0% {
         opacity: 0;
@@ -78,8 +80,12 @@
     }
 }
 
+/*
+	common styles
+   ================ */
 #animation {
     --frame-animation-duration: 0.4s;
+    --step-animation-duration: 0.3s;
     --step-animation-delay: 0.5s;
     position: relative;
     overflow: hidden;
@@ -88,7 +94,6 @@
 /* logos animation */
 .logo {
     position: absolute;
-    inset: 0;
     opacity: 0;
 }
 
@@ -103,7 +108,6 @@
 /* logos animation */
 .cta {
     position: absolute;
-    inset: 0;
     opacity: 0;
 }
 
@@ -112,7 +116,7 @@
 }
 
 .cta.active {
-    animation: fadeInUp var(--frame-animation-duration) linear 0.5s forwards;
+    animation: fadeInUp var(--frame-animation-duration) linear var(--step-animation-delay) forwards;
 }
 
 /* frames animation */
@@ -126,19 +130,16 @@
 }
 
 .frame.show {
-    opacity: 1;
     animation-name: fadeIn;
 }
 
 .frame.hide {
-    opacity: 1;
     animation-name: fadeOut;
 }
 
 /* frames inner elements animation */
 .frame > * {
     position: absolute;
-    inset: 0;
     opacity: 0;
 }
 
@@ -146,42 +147,51 @@
     opacity: 1;
 }
 
-.frame.show.start-animation > * {
-    animation-name: fadeInUp;
-}
-
 /* steps animation */
 .step-0 {
     animation-delay: calc(var(--step-animation-delay) * 1);
-    animation-duration: 0.3s;
+    animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
 .step-1 {
     animation-delay: calc(var(--step-animation-delay) * 2);
-    animation-duration: 0.3s;
+    animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
 .step-2 {
     animation-delay: calc(var(--step-animation-delay) * 3);
-    animation-duration: 0.3s;
+    animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
 .step-3 {
     animation-delay: calc(var(--step-animation-delay) * 4);
-    animation-duration: 0.3s;
+    animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
 .step-4 {
     animation-delay: calc(var(--step-animation-delay) * 5);
-    animation-duration: 0.3s;
+    animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
+}
+
+/*
+	your styles
+   ================ */
+.logo,
+.cta,
+.frame > * {
+    inset: 0;
+}
+
+.frame.show.start-animation > * {
+    animation-name: fadeInUp;
 }
