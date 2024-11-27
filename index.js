@@ -5,13 +5,14 @@ window.addEventListener(
         const startAnimation = new CustomEvent('startAnimation')
 
         const animationWrapper = document.querySelector('#animation')
-        const step = document.querySelectorAll('.step-0')
         const frames = document.querySelectorAll('.frame')
         const logos = document.querySelectorAll('.logo')
         const ctaButtons = document.querySelectorAll('.cta')
 
-        const frameAnimationDuration = parseFloat(window.getComputedStyle(frames[0]).animationDuration) * 1000
-        const stepsAnimationDelay = parseFloat(window.getComputedStyle(step[0]).animationDelay) * 1000
+        const frameAnimationDuration =
+            parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--frame-animation-duration')) * 1000
+        const stepsAnimationDelay =
+            parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--step-animation-delay')) * 1000
         const loopRotate = true
         const animationDelay = 1500
 
@@ -47,10 +48,7 @@ window.addEventListener(
             animationWrapper.classList.add(`active-frame-${currFrame}`)
 
             lastChild.addEventListener('animationend', nextFrameEventDispatch)
-
-            animationWrapper.addEventListener('startAnimation', () => {
-                frame.classList.add('start-animation')
-            })
+            animationWrapper.addEventListener('startAnimation', startAnimationHandler)
         }
 
         function hideFrame(currFrame, prevFrame) {
@@ -58,11 +56,11 @@ window.addEventListener(
 
             frames[prevFrame].classList.add('hide')
             frames[prevFrame].classList.remove('show')
-            frames[prevFrame].classList.remove('start-animation')
             animationWrapper.classList.remove(`active-frame-${prevFrame}`)
 
             setTimeout(() => {
                 frames[prevFrame].classList.remove('hide')
+                frames[prevFrame].classList.remove('start-animation')
             }, frameAnimationDuration)
         }
 
@@ -113,6 +111,13 @@ window.addEventListener(
                     prevCta = ctaBtn.getAttribute('data-title')
                 }
             })
+        }
+
+        function startAnimationHandler() {
+            const frame = this.querySelector('.frame.show')
+            frame.classList.add('start-animation')
+
+            this.addEventListener('startAnimation', startAnimationHandler)
         }
 
         function nextFrameEventDispatch() {
