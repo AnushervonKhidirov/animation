@@ -14,12 +14,14 @@ window.addEventListener(
             parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--frame-animation-duration')) * 1000
         const stepsAnimationDelay =
             parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--step-animation-delay')) * 1000
-        const loopRotate = true
-        const animationDelay = 1500
 
         let prevFrame = 0
         let currFrame = 0
         let prevCta = null
+
+        // params
+        const loopRotate = true
+        const animationDelay = 1000
 
         animationWrapper.addEventListener('showNextFrame', nextFrame)
         animationWrapper.dispatchEvent(nextFrameEvent)
@@ -48,8 +50,10 @@ window.addEventListener(
 
             animationWrapper.classList.add(`active-frame-${currFrame}`)
 
-            lastChild.addEventListener('animationend', nextFrameEventDispatch)
             animationWrapper.addEventListener('startAnimation', startAnimationHandler)
+
+            // TODO: add params to switch frame after cta animation ended
+            lastChild.addEventListener('animationend', nextFrameEventDispatch)
         }
 
         function hideFrame(currFrame, prevFrame) {
