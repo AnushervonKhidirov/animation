@@ -3,12 +3,15 @@ window.addEventListener(
     'load',
     () => {
         const nextFrameEvent = new CustomEvent('showNextFrame')
-        const startAnimation = new CustomEvent('startAnimation')
+        const startAnimationEvent = new CustomEvent('startAnimation')
 
         const animationWrapper = document.querySelector('#animation')
         const frames = document.querySelectorAll('.frame')
-        const logos = document.querySelectorAll('.logo')
-        const ctaButtons = document.querySelectorAll('.cta')
+        const logoWrapper = document.querySelector('#logos')
+        const ctaButtonsWrapper = document.querySelector('#cta-buttons')
+
+        const logos = Array.from(logoWrapper.children)
+        const ctaButtons = Array.from(ctaButtonsWrapper.children)
 
         const frameAnimationDuration =
             parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--frame-animation-duration')) * 1000
@@ -21,7 +24,10 @@ window.addEventListener(
 
         // params
         const loopRotate = true
+        const showCtaFirst = false
         const animationDelay = 1000
+
+        if (!showCtaFirst) ctaButtonsWrapper.style.setProperty('--cta-animation-delay', '0s')
 
         animationWrapper.addEventListener('showNextFrame', nextFrame)
         animationWrapper.dispatchEvent(nextFrameEvent)
@@ -36,7 +42,9 @@ window.addEventListener(
             showFrame(currFrame)
 
             logosHandler(currFrame)
-            ctaButtonsHandler(currFrame)
+
+            if (!showCtaFirst) hideCtaButton(currFrame)
+            if (showCtaFirst) ctaButtonsHandler(currFrame)
 
             prevFrame = currFrame
             currFrame++
@@ -45,6 +53,7 @@ window.addEventListener(
         function showFrame(currFrame) {
             const frame = frames[currFrame]
             const lastChild = Array.from(frame.children).at(-1)
+            lastChild.currFrame = currFrame
 
             frame.classList.add('show')
 
@@ -52,8 +61,12 @@ window.addEventListener(
 
             animationWrapper.addEventListener('startAnimation', startAnimationHandler)
 
-            // TODO: add params to switch frame after cta animation ended
-            lastChild.addEventListener('animationend', nextFrameEventDispatch)
+            if (showCtaFirst) {
+                lastChild.addEventListener('animationend', nextFrameEventDispatch)
+            } else {
+                animationWrapper.dispatchEvent(startAnimationEvent)
+                lastChild.addEventListener('animationend', showCtaEventDispatch)
+            }
         }
 
         function hideFrame(currFrame, prevFrame) {
@@ -93,7 +106,7 @@ window.addEventListener(
             if (ctaButtons.length === 0) return
             if (ctaButtons.length === 1) return ctaButtons[0].classList.add('active')
 
-            ctaButtons.forEach((ctaBtn, index) => {
+            ctaButtons.forEach(ctaBtn => {
                 if (ctaBtn.classList.contains('active')) {
                     ctaBtn.classList.add('hide')
                 } else {
@@ -105,10 +118,10 @@ window.addEventListener(
                 if (frames[currFrame].getAttribute('data-cta') === ctaBtn.getAttribute('data-title')) {
                     if (ctaBtn.getAttribute('data-title') !== prevCta) {
                         setTimeout(() => {
-                            animationWrapper.dispatchEvent(startAnimation)
+                            animationWrapper.dispatchEvent(startAnimationEvent)
                         }, stepsAnimationDelay)
                     } else {
-                        animationWrapper.dispatchEvent(startAnimation)
+                        animationWrapper.dispatchEvent(startAnimationEvent)
                     }
 
                     ctaBtn.classList.add('active')
@@ -118,15 +131,40 @@ window.addEventListener(
             })
         }
 
+        function hideCtaButton(currFrame) {
+            ctaButtons.forEach(ctaBtn => {
+                if (frames[currFrame].getAttribute('data-cta') !== ctaBtn.getAttribute('data-title')) {
+                    if (ctaBtn.getAttribute('data-title') === prevCta) {
+                        ctaBtn.classList.add('hide')
+                        ctaBtn.classList.remove('active')
+
+                        setTimeout(() => {
+                            ctaBtn.classList.remove('hide')
+                        }, frameAnimationDuration)
+                    }
+                }
+            })
+        }
+
         function startAnimationHandler() {
+            this.addEventListener('startAnimation', startAnimationHandler)
+
             const frame = this.querySelector('.frame.show')
             frame.classList.add('start-animation')
-
-            this.addEventListener('startAnimation', startAnimationHandler)
         }
 
         function nextFrameEventDispatch() {
             this.removeEventListener('animationend', nextFrameEventDispatch)
+
+            setTimeout(() => {
+                animationWrapper.dispatchEvent(nextFrameEvent)
+            }, animationDelay)
+        }
+
+        function showCtaEventDispatch() {
+            this.removeEventListener('animationend', showCtaEventDispatch)
+
+            ctaButtonsHandler(this.currFrame)
 
             setTimeout(() => {
                 animationWrapper.dispatchEvent(nextFrameEvent)

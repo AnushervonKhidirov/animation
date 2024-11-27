@@ -87,6 +87,7 @@
     --frame-animation-duration: 0.4s;
     --step-animation-duration: 0.3s;
     --step-animation-delay: 0.5s;
+    --cta-animation-delay: var(--step-animation-delay);
     position: relative;
     overflow: hidden;
 }
@@ -105,7 +106,7 @@
     animation: fadeIn var(--frame-animation-duration) linear forwards;
 }
 
-/* logos animation */
+/* cta animation */
 .cta {
     position: absolute;
     opacity: 0;
@@ -116,7 +117,7 @@
 }
 
 .cta.active {
-    animation: fadeInUp var(--frame-animation-duration) linear var(--step-animation-delay) forwards;
+    animation: fadeInUp var(--frame-animation-duration) linear var(--cta-animation-delay) forwards;
 }
 
 /* frames animation */
