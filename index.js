@@ -80,7 +80,6 @@ window.addEventListener('load', () => {
 
     function logosHandler(currFrame) {
         if (logos.length === 0) return
-        if (logos.length === 1) return logos[0].classList.add('active')
 
         logos.forEach(logo => {
             if (logo.classList.contains('active')) {
@@ -99,8 +98,13 @@ window.addEventListener('load', () => {
     }
 
     function ctaButtonsHandler(currFrame) {
-        if (ctaButtons.length === 0) return
-        if (ctaButtons.length === 1) return ctaButtons[0].classList.add('active')
+        if (ctaButtons.length === 0) {
+            setTimeout(() => {
+                animationWrapper.dispatchEvent(nextFrameEvent)
+            }, animationDelay)
+
+            return
+        }
 
         ctaButtons.forEach(ctaBtn => {
             if (ctaBtn.classList.contains('active')) {
