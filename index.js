@@ -1,5 +1,11 @@
 // NOTE: add this code to script tag in index.html
 window.addEventListener('load', () => {
+    // === params === //
+    const animationDelay = 1500
+    const loopRotate = true
+    const showCtaFirst = false
+    // === params === //
+
     const nextFrameEvent = new CustomEvent('showNextFrame')
     const startAnimationEvent = new CustomEvent('startAnimation')
 
@@ -17,11 +23,6 @@ window.addEventListener('load', () => {
     let prevFrame = 0
     let currFrame = 0
     let prevCta = null
-
-    // params
-    const loopRotate = true
-    const showCtaFirst = false
-    const animationDelay = 1000
 
     if (!showCtaFirst) ctaButtonsWrapper.style.setProperty('--cta-animation-delay', '0s')
 
@@ -79,8 +80,6 @@ window.addEventListener('load', () => {
     }
 
     function logosHandler(currFrame) {
-        if (logos.length === 0) return
-
         logos.forEach(logo => {
             if (logo.classList.contains('active')) {
                 logo.classList.add('hide')

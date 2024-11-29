@@ -150,34 +150,41 @@
 
 /* steps animation */
 .step-0 {
-    animation-delay: calc(var(--step-animation-delay) * 1);
+    animation-delay: calc(var(--step-animation-delay) * 0);
     animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
 .step-1 {
-    animation-delay: calc(var(--step-animation-delay) * 2);
+    animation-delay: calc(var(--step-animation-delay) * 1);
     animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
 .step-2 {
-    animation-delay: calc(var(--step-animation-delay) * 3);
+    animation-delay: calc(var(--step-animation-delay) * 2);
     animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
 .step-3 {
-    animation-delay: calc(var(--step-animation-delay) * 4);
+    animation-delay: calc(var(--step-animation-delay) * 3);
     animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
 }
 
 .step-4 {
+    animation-delay: calc(var(--step-animation-delay) * 4);
+    animation-duration: var(--step-animation-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
+}
+
+.step-5 {
     animation-delay: calc(var(--step-animation-delay) * 5);
     animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
