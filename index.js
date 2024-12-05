@@ -223,7 +223,7 @@ window.addEventListener('load', () => {
             creepingLineTop.appendChild(text.cloneNode(true))
             creepingLineBottom.appendChild(text.cloneNode(true))
 
-            if (Math.min(creepingLineTop.offsetWidth, creepingLineBottom.offsetWidth) > animationWrapper.offsetWidth) {
+            if (Math.min(creepingLineTop.offsetWidth, creepingLineBottom.offsetWidth) > animationWrapper.offsetWidth * 2) {
                 shouldAddText = false
                 creepingLineTop.appendChild(text.cloneNode(true))
                 creepingLineBottom.appendChild(text.cloneNode(true))
