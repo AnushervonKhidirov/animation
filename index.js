@@ -21,7 +21,7 @@ window.addEventListener(
         const ctaButtons = Array.from(ctaButtonsWrapper.children)
 
         const creepingLines = document.querySelector('.creeping-lines')
-        const creepingAxis = window.getComputedStyle(creepingLines).getPropertyValue('--axis')
+        const creepingAxis = creepingLines && window.getComputedStyle(creepingLines).getPropertyValue('--axis')
 
         const frameAnimationDuration =
             parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--frame-animation-duration')) * 1000
