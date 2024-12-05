@@ -176,11 +176,6 @@
 .creeping-lines {
     position: absolute;
     inset: 0;
-    font-family: 'HelveticaNeue-Condensed', sans-serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    opacity: 0;
-    animation: fadeIn var(--frame-animation-duration) linear forwards;
 }
 
 .creeping-line {
@@ -192,7 +187,12 @@
     gap: var(--gap);
     background: #000;
     color: #fff;
+    font-family: 'HelveticaNeue-Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
     padding: 0 var(--gap);
+    opacity: 0;
+    animation: fadeIn var(--frame-animation-duration) linear forwards;
 }
 
 .creeping-line.creeping-line-top {
