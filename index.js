@@ -199,9 +199,8 @@ window.addEventListener('load', () => {
     }
 
     function addCreepingLines() {
-        let shouldAddText = true
-
         const lineText = creepingLines.getAttribute('data-text')
+        if (!lineText) return
 
         const creepingLine = document.createElement('div')
         creepingLine.classList.add('creeping-line')
@@ -217,6 +216,8 @@ window.addEventListener('load', () => {
 
         const text = document.createElement('span')
         text.innerHTML = lineText
+
+        let shouldAddText = true
 
         while (shouldAddText) {
             creepingLineTop.appendChild(text.cloneNode(true))
