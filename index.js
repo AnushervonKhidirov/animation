@@ -1,6 +1,7 @@
 // NOTE: add this code to script tag in index.html
 window.addEventListener('load', () => {
     // === params === //
+    const creepingLineSpeed = 1
     const animationDelay = 1000
     const loopRotate = true
     const showCtaFirst = false
@@ -17,8 +18,12 @@ window.addEventListener('load', () => {
     const logos = Array.from(logoWrapper.children)
     const ctaButtons = Array.from(ctaButtonsWrapper.children)
 
+    const creepingLines = document.querySelector('.creeping-lines')
+
     const frameAnimationDuration = parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--frame-animation-duration')) * 1000
     const stepsAnimationDelay = parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--step-animation-delay')) * 1000
+
+    let creepingLInePosition = 0
 
     let prevFrame = 0
     let currFrame = 0
@@ -28,6 +33,8 @@ window.addEventListener('load', () => {
 
     animationWrapper.addEventListener('showNextFrame', nextFrame)
     animationWrapper.dispatchEvent(nextFrameEvent)
+
+    if (creepingLines) addCreepingLines()
 
     function nextFrame() {
         if (currFrame >= frames.length) {
@@ -119,7 +126,7 @@ window.addEventListener('load', () => {
             if (!frames[currFrame].getAttribute('data-cta') && !triggered) {
                 triggered = true
                 prevCta = null
-                
+
                 setTimeout(() => {
                     animationWrapper.dispatchEvent(nextFrameEvent)
                 }, animationDelay)
@@ -190,4 +197,55 @@ window.addEventListener('load', () => {
 
         ctaButtonsHandler(this.currFrame)
     }
-}, false)
+
+    function addCreepingLines() {
+        let shouldAddText = true
+
+        const lineText = creepingLines.getAttribute('data-text')
+
+        const creepingLine = document.createElement('div')
+        creepingLine.classList.add('creeping-line')
+
+        const creepingLineTop = creepingLine.cloneNode(true)
+        creepingLineTop.classList.add('creeping-line-top')
+
+        const creepingLineBottom = creepingLine.cloneNode(true)
+        creepingLineBottom.classList.add('creeping-line-bottom')
+
+        creepingLines.appendChild(creepingLineTop)
+        creepingLines.appendChild(creepingLineBottom)
+
+        const text = document.createElement('span')
+        text.innerHTML = lineText
+
+        while (shouldAddText) {
+            creepingLineTop.appendChild(text.cloneNode(true))
+            creepingLineBottom.appendChild(text.cloneNode(true))
+
+            if (Math.min(creepingLineTop.offsetWidth, creepingLineBottom.offsetWidth) > animationWrapper.offsetWidth) {
+                shouldAddText = false
+                creepingLineTop.appendChild(text.cloneNode(true))
+                creepingLineBottom.appendChild(text.cloneNode(true))
+            }
+        }
+
+        requestAnimationFrame(() => moveLine({ top: creepingLineTop, bottom: creepingLineBottom }))
+    }
+
+    function moveLine({ top, bottom }) {
+        const textWidth = top.children[0].offsetWidth
+        const gap = parseFloat(window.getComputedStyle(top).getPropertyValue('gap'))
+        const maxWidth = textWidth + gap
+
+        if (creepingLInePosition >= maxWidth) {
+            creepingLInePosition = 0
+        } else {
+            creepingLInePosition += 1 * creepingLineSpeed
+        }
+
+        top.style.transform = `translateX(${creepingLInePosition * -1}px)`
+        bottom.style.transform = `translateX(${creepingLInePosition}px)`
+
+        requestAnimationFrame(() => moveLine({ top, bottom }))
+    }
+}, false )

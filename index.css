@@ -81,6 +81,58 @@
 }
 
 /*
+	fonts
+   ================ */
+@font-face {
+    font-family: 'Helvetica';
+    src: url('https://am.contobox.com/cbdata/fonts/HelveticaAll/HelveticaNeue/HelveticaNeue-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HelveticaNeueLTStd';
+    src: url('https://am.contobox.com/cbdata/fonts/HelveticaAll/HelveticaNeueLTStd/HelveticaNeueLTStd-Lt.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HelveticaNeueLTStd';
+    src: url('https://am.contobox.com/cbdata/fonts/HelveticaAll/HelveticaNeueLTStd/HelveticaNeueLTStd-Md.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HelveticaNeueLTStd';
+    src: url('https://am.contobox.com/cbdata/fonts/HelveticaAll/HelveticaNeueLTStd/HelveticaNeueLTStd-Bd.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HelveticaNeue-Condensed';
+    src: url('https://am.contobox.com/cbdata/fonts/HelveticaAll/HelveticaNeue/HelveticaNeue-BoldCond.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HelveticaNeue-Condensed';
+    src: url('https://am.contobox.com/cbdata/fonts/HelveticaAll/HelveticaNeue/HelveticaNeue-BlackCond.woff') format('woff');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'HelveticaNeue-Condensed';
+    src: url('https://am.contobox.com/cbdata/fonts/HelveticaAll/HelveticaNeue/HelveticaNeue-BlackExtCond.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+}
+
+/*
 	common styles
    ================ */
 #animation {
@@ -118,6 +170,41 @@
 
 .cta.active {
     animation: fadeInUp var(--frame-animation-duration) linear var(--cta-animation-delay) forwards;
+}
+
+/* creeping lines */
+.creeping-lines {
+    position: absolute;
+    inset: 0;
+    font-family: 'HelveticaNeue-Condensed', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.creeping-line {
+    --gap: 1em;
+    position: absolute;
+    display: inline-grid;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    gap: var(--gap);
+    background: #000;
+    color: #fff;
+    padding: 0 var(--gap);
+}
+
+.creeping-line.creeping-line-top {
+    top: 0;
+    left: 0;
+}
+
+.creeping-line.creeping-line-bottom {
+    bottom: 0;
+    right: 0;
+}
+
+.creeping-line.creeping-line-bottom span {
+    transform: rotate(180deg);
 }
 
 /* frames animation */
