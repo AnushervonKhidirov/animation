@@ -184,6 +184,7 @@
     display: inline-grid;
     grid-auto-flow: column;
     grid-auto-columns: max-content;
+    align-items: center;
     gap: var(--gap);
     background: #000;
     color: #fff;
@@ -193,6 +194,10 @@
     padding: 0 var(--gap);
     opacity: 0;
     animation: fadeIn var(--frame-animation-duration) linear forwards;
+}
+
+.creeping-line > span {
+    padding-bottom: 0.1em;
 }
 
 .creeping-line.creeping-line-top {
