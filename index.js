@@ -126,7 +126,6 @@ window.addEventListener('load', () => {
             }
 
             if (frames[currFrame].getAttribute('data-cta') === ctaBtn.getAttribute('data-title')) {
-                console.log('2');
                 if (ctaBtn.getAttribute('data-title') !== prevCta) {
                     if (showCtaFirst) {
                         setTimeout(() => {
