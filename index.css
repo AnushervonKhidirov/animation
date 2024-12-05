@@ -196,10 +196,6 @@
     animation: fadeIn var(--frame-animation-duration) linear forwards;
 }
 
-.creeping-line > span {
-    padding-bottom: 0.1em;
-}
-
 .creeping-line.creeping-line-top {
     top: 0;
     left: 0;
