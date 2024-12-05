@@ -1,0 +1,44 @@
+#animation {
+    width: 320px;
+    height: 50px;
+    background: url(images/320x50-bg.jpg) center no-repeat;
+    background-size: cover;
+}
+
+.logo {
+    background: url(images/320x50-logo.png) center no-repeat;
+    background-size: contain;
+}
+
+.cta[data-title='Shop Now'] {
+    background: url(images/320x50-cta.png) center no-repeat;
+    background-size: contain;
+}
+
+/* creeping lines */
+.creeping-lines {
+    display: none;
+}
+
+/* frame 0 */
+.frame-0 .text {
+    background: url(images/320x50-frame-0-text.png) center no-repeat;
+    background-size: contain;
+}
+
+/* frame 1 */
+.frame-1 .text-0 {
+    background: url(images/320x50-frame-1-text-0.png) center no-repeat;
+    background-size: contain;
+}
+
+.frame-1 .text-1 {
+    background: url(images/320x50-frame-1-text-1.png) center no-repeat;
+    background-size: contain;
+}
+
+/* frame 2 */
+.frame-2 .image {
+    background: url(images/320x50-frame-2-image.png) center no-repeat;
+    background-size: contain;
+}

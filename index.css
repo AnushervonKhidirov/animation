@@ -174,14 +174,18 @@
 
 /* creeping lines */
 .creeping-lines {
+    --axis: horizontal; /* horizontal | vertical */
+    --gap: 2em;
+    --height: auto;
+
     position: absolute;
     inset: 0;
 }
 
 .creeping-line {
-    --gap: 1em;
     position: absolute;
     display: inline-grid;
+    height: var(--height);
     grid-auto-flow: column;
     grid-auto-columns: max-content;
     align-items: center;
@@ -196,14 +200,28 @@
     animation: fadeIn var(--frame-animation-duration) linear forwards;
 }
 
-.creeping-line.creeping-line-top {
+.creeping-lines.horizontal .creeping-line.creeping-line-top {
     top: 0;
     left: 0;
 }
 
-.creeping-line.creeping-line-bottom {
+.creeping-lines.horizontal .creeping-line.creeping-line-bottom {
     bottom: 0;
     right: 0;
+}
+
+.creeping-lines.vertical .creeping-line.creeping-line-top {
+    bottom: calc(var(--height) * -1);
+    left: 0;
+    transform: rotate(-90deg);
+    transform-origin: top left;
+}
+
+.creeping-lines.vertical .creeping-line.creeping-line-bottom {
+    top: 0;
+    right: var(--height);
+    transform: rotate(-90deg);
+    transform-origin: top right;
 }
 
 .creeping-line.creeping-line-bottom span {
