@@ -4,7 +4,7 @@ window.addEventListener('load', () => {
     const creepingLineSpeed = 1
     const animationDelay = 1000
     const loopRotate = true
-    const showCtaFirst = false
+    const showCtaFirst = true
     // === params === //
 
     const nextFrameEvent = new CustomEvent('showNextFrame')
@@ -128,9 +128,13 @@ window.addEventListener('load', () => {
                 triggered = true
                 prevCta = null
 
-                setTimeout(() => {
-                    animationWrapper.dispatchEvent(nextFrameEvent)
-                }, animationDelay)
+                if (showCtaFirst) animationWrapper.dispatchEvent(startAnimationEvent)
+
+                if (!showCtaFirst) {
+                    setTimeout(() => {
+                        animationWrapper.dispatchEvent(nextFrameEvent)
+                    }, animationDelay)
+                }
             }
 
             if (frames[currFrame].getAttribute('data-cta') === ctaBtn.getAttribute('data-title')) {
