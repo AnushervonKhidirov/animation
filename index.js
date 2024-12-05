@@ -199,8 +199,9 @@ window.addEventListener('load', () => {
     }
 
     function addCreepingLines() {
+        const isHidden = window.getComputedStyle(creepingLines).getPropertyValue('display') === 'none'
         const lineText = creepingLines.getAttribute('data-text')
-        if (!lineText) return
+        if (!lineText || isHidden) return
 
         const creepingLine = document.createElement('div')
         creepingLine.classList.add('creeping-line')
