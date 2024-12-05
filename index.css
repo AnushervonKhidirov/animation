@@ -85,7 +85,7 @@
    ================ */
 #animation {
     --frame-animation-duration: 0.4s;
-    --step-animation-duration: 0.3s;
+    --step-animation-duration: 0.5s;
     --step-animation-delay: 0.5s;
     --cta-animation-delay: var(--step-animation-delay);
     position: relative;

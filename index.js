@@ -1,7 +1,7 @@
 // NOTE: add this code to script tag in index.html
 window.addEventListener('load', () => {
     // === params === //
-    const animationDelay = 1500
+    const animationDelay = 1000
     const loopRotate = true
     const showCtaFirst = false
     // === params === //
@@ -105,6 +105,8 @@ window.addEventListener('load', () => {
             return
         }
 
+        let triggered = false
+
         ctaButtons.forEach(ctaBtn => {
             if (ctaBtn.classList.contains('active')) {
                 ctaBtn.classList.add('hide')
@@ -114,7 +116,17 @@ window.addEventListener('load', () => {
 
             ctaBtn.classList.remove('active')
 
+            if (!frames[currFrame].getAttribute('data-cta') && !triggered) {
+                triggered = true
+                prevCta = null
+                
+                setTimeout(() => {
+                    animationWrapper.dispatchEvent(nextFrameEvent)
+                }, animationDelay)
+            }
+
             if (frames[currFrame].getAttribute('data-cta') === ctaBtn.getAttribute('data-title')) {
+                console.log('2');
                 if (ctaBtn.getAttribute('data-title') !== prevCta) {
                     if (showCtaFirst) {
                         setTimeout(() => {
