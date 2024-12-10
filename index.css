@@ -80,6 +80,20 @@
     }
 }
 
+@keyframes puls {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.75);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
 /*
 	fonts
    ================ */
@@ -138,7 +152,7 @@
 #animation {
     --frame-animation-duration: 0.4s;
     --step-animation-duration: 0.5s;
-    --step-animation-delay: 0.5s;
+    --step-animation-delay: 2s;
     --cta-animation-delay: var(--step-animation-delay);
     position: relative;
     overflow: hidden;
@@ -297,6 +311,19 @@
     animation-duration: var(--step-animation-duration);
     animation-fill-mode: forwards;
     animation-timing-function: ease-out;
+}
+
+/*
+	developer mode styles
+   ================ */
+.next-frame-button-developer {
+    position: absolute;
+    bottom: 0.5em;
+    right: 0.5em;
+    font-size: 0.5em;
+    cursor: pointer;
+    animation: puls 0.25s linear 5 forwards;
+    z-index: 99;
 }
 
 /*

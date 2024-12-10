@@ -4,7 +4,9 @@ window.addEventListener('load', () => {
     const creepingLineSpeed = 1
     const animationDelay = 1000
     const loopRotate = true
-    const showCtaFirst = true
+    const showCtaFirst = false
+
+    const developerMode = false
     // === params === //
 
     const nextFrameEvent = new CustomEvent('showNextFrame')
@@ -33,7 +35,7 @@ window.addEventListener('load', () => {
     if (!showCtaFirst) ctaButtonsWrapper.style.setProperty('--cta-animation-delay', '0s')
 
     animationWrapper.addEventListener('showNextFrame', nextFrame)
-    animationWrapper.dispatchEvent(nextFrameEvent)
+    if (!developerMode) animationWrapper.dispatchEvent(nextFrameEvent)
 
     if (creepingLines) addCreepingLines()
 
@@ -107,7 +109,7 @@ window.addEventListener('load', () => {
     function ctaButtonsHandler(currFrame) {
         if (ctaButtons.length === 0) {
             setTimeout(() => {
-                animationWrapper.dispatchEvent(nextFrameEvent)
+                if (!developerMode) animationWrapper.dispatchEvent(nextFrameEvent)
             }, animationDelay)
 
             return
@@ -132,7 +134,7 @@ window.addEventListener('load', () => {
 
                 if (!showCtaFirst) {
                     setTimeout(() => {
-                        animationWrapper.dispatchEvent(nextFrameEvent)
+                        if (!developerMode) animationWrapper.dispatchEvent(nextFrameEvent)
                     }, animationDelay)
                 }
             }
@@ -147,7 +149,7 @@ window.addEventListener('load', () => {
 
                     if (!showCtaFirst) {
                         setTimeout(() => {
-                            animationWrapper.dispatchEvent(nextFrameEvent)
+                            if (!developerMode) animationWrapper.dispatchEvent(nextFrameEvent)
                         }, animationDelay + frameAnimationDuration)
                     }
                 } else {
@@ -155,7 +157,7 @@ window.addEventListener('load', () => {
 
                     if (!showCtaFirst) {
                         setTimeout(() => {
-                            animationWrapper.dispatchEvent(nextFrameEvent)
+                            if (!developerMode) animationWrapper.dispatchEvent(nextFrameEvent)
                         }, animationDelay)
                     }
                 }
@@ -193,7 +195,7 @@ window.addEventListener('load', () => {
         this.removeEventListener('animationend', nextFrameEventDispatch)
 
         setTimeout(() => {
-            animationWrapper.dispatchEvent(nextFrameEvent)
+            if (!developerMode) animationWrapper.dispatchEvent(nextFrameEvent)
         }, animationDelay)
     }
 
@@ -259,5 +261,24 @@ window.addEventListener('load', () => {
         bottom.style.transform = `rotate(${rotateValue}) translateX(${creepingLInePosition}px)`
 
         requestAnimationFrame(() => moveLine({ top, bottom }))
+    }
+
+    if (developerMode) addDeveloperModeActions()
+
+    function addDeveloperModeActions() {
+        addNextFrameButton()
+    }
+
+    function addNextFrameButton() {
+        const nextFrameButton = document.createElement('button')
+        nextFrameButton.innerHTML = `Next Frame (${currFrame})`
+        nextFrameButton.classList.add('next-frame-button-developer')
+
+        nextFrameButton.addEventListener('click', () => {
+            animationWrapper.dispatchEvent(nextFrameEvent)
+            nextFrameButton.innerHTML = `Next Frame (${currFrame})`
+        })
+
+        animationWrapper.appendChild(nextFrameButton)
     }
 }, false)
