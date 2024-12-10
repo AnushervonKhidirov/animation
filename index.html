@@ -1,3 +1,10 @@
+<!-- NOTE: html structure of animation banner
+you can add several logo and cta inside their parents and attach them to individual frame
+to attach cta to frame use "data-cta" attribute on frame with "data-title" attribute value of specific cta button
+to attach logo to frame use "data-logo" attribute on frame with "data-title" attribute value of specific logo
+to attach logo to frame use "data-logo" attribute on frame with "data-title" attribute value of specific logo
+cta/logo won't animation if cta/logo on current frame are the same as on previous frame -->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,7 +21,7 @@
     <body>
         <div id="animation">
             <div id="frames">
-                <div class="frame frame-0" data-logo="THD logo">
+                <div class="frame frame-0" data-logo="THD logo" data-cta="Shop Now">
                     <div class="text step-1"></div>
                 </div>
 
@@ -34,6 +41,7 @@
 
             <div id="cta-buttons">
                 <div class="cta" data-title="Shop Now"></div>
+                <div class="cta" data-title="Shop Now 2"></div>
             </div>
 
             <!-- NOTE: remove if no need -->

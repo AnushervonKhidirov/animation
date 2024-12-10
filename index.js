@@ -24,15 +24,15 @@ window.addEventListener('load', () => {
     const creepingAxis = creepingLines && window.getComputedStyle(creepingLines).getPropertyValue('--axis')
 
     const frameAnimationDuration = parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--frame-animation-duration')) * 1000
+    const stepsAnimationDuration = parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--step-animation-duration')) * 1000
     const stepsAnimationDelay = parseFloat(window.getComputedStyle(animationWrapper).getPropertyValue('--step-animation-delay')) * 1000
+    const ctaNextStepDelay = stepsAnimationDelay - stepsAnimationDuration >= 0 ? stepsAnimationDelay - stepsAnimationDuration : 0
 
     let creepingLInePosition = 0
 
     let prevFrame = 0
     let currFrame = 0
     let prevCta = null
-
-    if (!showCtaFirst) ctaButtonsWrapper.style.setProperty('--cta-animation-delay', '0s')
 
     animationWrapper.addEventListener('showNextFrame', nextFrame)
     if (!developerMode) animationWrapper.dispatchEvent(nextFrameEvent)
@@ -144,13 +144,11 @@ window.addEventListener('load', () => {
                     if (showCtaFirst) {
                         setTimeout(() => {
                             animationWrapper.dispatchEvent(startAnimationEvent)
-                        }, stepsAnimationDelay)
+                        }, ctaNextStepDelay)
                     }
 
                     if (!showCtaFirst) {
-                        setTimeout(() => {
-                            if (!developerMode) animationWrapper.dispatchEvent(nextFrameEvent)
-                        }, animationDelay + frameAnimationDuration)
+                        ctaBtn.addEventListener('animationend', nextFrameEventDispatch)
                     }
                 } else {
                     if (showCtaFirst) animationWrapper.dispatchEvent(startAnimationEvent)

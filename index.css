@@ -149,12 +149,21 @@
 /*
 	common styles
    ================ */
+body {
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
 #animation {
     --frame-animation-duration: 0.4s;
     --step-animation-duration: 0.5s;
-    --step-animation-delay: 2s;
-    --cta-animation-delay: var(--step-animation-delay);
-    position: relative;
+    --step-animation-delay: 1s;
+    --cta-animation-duration: var(--step-animation-duration);
+    --cta-animation-delay: calc(var(--step-animation-delay) - var(--step-animation-duration));
+
+    position: absolute;
+    inset: 0;
     overflow: hidden;
 }
 
@@ -183,7 +192,7 @@
 }
 
 .cta.active {
-    animation: fadeInUp var(--frame-animation-duration) linear var(--cta-animation-delay) forwards;
+    animation: fadeInUp var(--cta-animation-duration) linear var(--cta-animation-delay) forwards;
 }
 
 /* creeping lines */

@@ -1,6 +1,9 @@
-#animation {
+body {
     width: 728px;
     height: 90px;
+}
+
+#animation {
     background: url(images/728x90-bg.jpg) center no-repeat;
     background-size: cover;
 }
