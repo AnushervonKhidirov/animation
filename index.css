@@ -158,7 +158,8 @@ body {
 #animation {
     --frame-animation-duration: 0.4s;
     --step-animation-duration: 0.5s;
-    --step-animation-delay: 1s;
+    --step-animation-delay: 0.7s;
+
     --cta-animation-duration: var(--step-animation-duration);
     --cta-animation-delay: calc(var(--step-animation-delay) - var(--step-animation-duration));
 
