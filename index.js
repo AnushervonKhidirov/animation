@@ -1,10 +1,9 @@
-// NOTE: add this code to script tag in index.html
 window.addEventListener(
   'load',
   () => {
     // === params === //
     const creepingLineSpeed = 1;
-    const animationDelay = 1000;
+    const animationDelay = 2000;
     const loopRotate = true;
     const showCtaFirst = false;
 
