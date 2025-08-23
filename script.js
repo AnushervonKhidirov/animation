@@ -135,12 +135,9 @@ class BannerAnimation {
         console.log(`Frame switched (from ${this.prevFrameIndex} to ${this.currFrameIndex}) | event name: ${this.frameSwitchedEventName}`);
       }
 
-      // const shouldUpdateLogo = this.shouldUpdateLogo();
       const shouldUpdateCta = this.shouldUpdateCta();
 
       this.resetStepClassnames(this.prevFrameIndex);
-
-      // if (shouldUpdateLogo) this.showLogo(this.currLogoTitle);
 
       if (this.showCtaFirst && shouldUpdateCta) {
         this.showCta(this.currCtaTitle, true);
@@ -291,25 +288,40 @@ class BannerAnimation {
 
     if (stepElements.length === 0) return this.finishStepAnimation();
 
-    const stepElementsArray = Array.from(stepElements).sort((a, b) => a.dataset.step - b.dataset.step);
+    const stepNumbersArray = this.getStepNumbers(stepElements);
 
     setTimeout(nextStep.bind(this), delay);
 
     function nextStep(stepIndex = 0) {
-      const isLastStep = stepIndex >= stepElementsArray.length - 1;
-      const stepElem = stepElementsArray[stepIndex];
+      const isLastStep = stepIndex >= stepNumbersArray.length - 1;
+      const stepNum = stepNumbersArray[stepIndex];
 
-      stepElem.classList.add(this.showClassName);
+      const stepElements = frame.querySelectorAll(`[${this.dataStep}="${stepNum}"]`);
 
-      stepElem.addEventListener(
-        'animationend',
-        () => {
-          if (isLastStep) return this.finishStepAnimation(controller);
-          setTimeout(nextStep.bind(this, stepIndex + 1), this.animationDelay);
-        },
-        { signal },
-      );
+      stepElements.forEach(stepElem => {
+        stepElem.classList.add(this.showClassName);
+
+        stepElem.addEventListener(
+          'animationend',
+          () => {
+            if (isLastStep) return this.finishStepAnimation(controller);
+            setTimeout(nextStep.bind(this, stepIndex + 1), this.animationDelay);
+          },
+          { signal },
+        );
+      });
     }
+  }
+
+  getStepNumbers(stepElements) {
+    const stepNumbers = [];
+
+    stepElements.forEach(stepElem => {
+      const stepNum = stepElem.getAttribute(this.dataStep);
+      if (stepNum > 0) stepNumbers[stepNum - 1] = parseInt(stepNum);
+    });
+
+    return stepNumbers.filter(stepNum => typeof stepNum === 'number');
   }
 
   finishStepAnimation(controller) {
