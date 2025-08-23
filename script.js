@@ -100,7 +100,15 @@ class BannerAnimation {
         console.log(`Animation banner initialized | event name: ${this.initEventName}`);
       }
 
+      this.logoHandler(this.currFrameIndex);
       this.ctaHandler(this.currFrameIndex);
+
+      const shouldUpdateLogo = this.shouldUpdateLogo();
+
+      if (shouldUpdateLogo) {
+        this.hideLogo(this.prevLogoTitle);
+        this.showLogo(this.currLogoTitle);
+      }
     });
 
     this.parentElem.addEventListener(this.frameSwitchingEventName, () => {
@@ -108,9 +116,16 @@ class BannerAnimation {
         console.log(`Start frame switching (from ${this.prevFrameIndex} to ${this.currFrameIndex}) | event name: ${this.frameSwitchingEventName}`);
       }
 
+      this.logoHandler(this.currFrameIndex);
       this.ctaHandler(this.currFrameIndex);
 
+      const shouldUpdateLogo = this.shouldUpdateLogo();
       const shouldUpdateCta = this.shouldUpdateCta();
+
+      if (shouldUpdateLogo) {
+        this.hideLogo(this.prevLogoTitle);
+        this.showLogo(this.currLogoTitle);
+      }
 
       if (shouldUpdateCta) this.hideCta(this.prevCtaTitle);
     });
@@ -120,9 +135,12 @@ class BannerAnimation {
         console.log(`Frame switched (from ${this.prevFrameIndex} to ${this.currFrameIndex}) | event name: ${this.frameSwitchedEventName}`);
       }
 
+      // const shouldUpdateLogo = this.shouldUpdateLogo();
       const shouldUpdateCta = this.shouldUpdateCta();
 
       this.resetStepClassnames(this.prevFrameIndex);
+
+      // if (shouldUpdateLogo) this.showLogo(this.currLogoTitle);
 
       if (this.showCtaFirst && shouldUpdateCta) {
         this.showCta(this.currCtaTitle, true);
@@ -314,9 +332,45 @@ class BannerAnimation {
     this.logos = this.logoWrapper.querySelectorAll('.logo');
   }
 
-  showLogo(logoTitle) {}
+  logoHandler(frameIndex) {
+    const frame = this.frames[frameIndex];
+    const { logoTitle } = this.getFrameData(frame);
 
-  hideLogo(logoTitle) {}
+    this.prevLogoTitle = this.currLogoTitle;
+    this.currLogoTitle = logoTitle;
+  }
+
+  shouldUpdateLogo() {
+    return this.currLogoTitle !== this.prevLogoTitle;
+  }
+
+  showLogo(logoTitle) {
+    if (!logoTitle) return;
+
+    const logo = document.querySelector(`.logo[${this.dataTitle}="${logoTitle}"]`);
+    logo.classList.add(this.showClassName);
+  }
+
+  hideLogo(logoTitle) {
+    if (!logoTitle) return;
+
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const logo = document.querySelector(`.logo[${this.dataTitle}="${logoTitle}"]`);
+    logo.classList.add(this.hideClassName);
+
+    logo.addEventListener(
+      'animationend',
+      () => {
+        logo.classList.remove(this.hideClassName);
+        logo.classList.remove(this.showClassName);
+
+        controller.abort();
+      },
+      { signal },
+    );
+  }
 
   // cta methods
   getCtaButtons() {
