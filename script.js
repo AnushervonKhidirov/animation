@@ -1,10 +1,11 @@
 class BannerAnimation {
   constructor(parentElem) {
     // params
-    this.developerMode = true;
     this.nextFrameDelay = 2000;
-    this.loopRotate = true;
     this.showCtaFirst = false;
+    this.loopRotate = true;
+
+    this.developerMode = true;
 
     // params from css
     this.animationDuration = 0;
@@ -151,7 +152,9 @@ class BannerAnimation {
         console.log(`All inner elements animation ended (steps & cta) | event name: ${this.frameInnerAnimEndEventName}`);
       }
 
-      if (!this.developerMode) {
+      const shouldSwitchFrame = this.shouldSwitchFrame();
+
+      if (shouldSwitchFrame) {
         setTimeout(this.nextFrame.bind(this), this.nextFrameDelay);
       }
     });
@@ -252,6 +255,11 @@ class BannerAnimation {
       },
       { signal },
     );
+  }
+
+  shouldSwitchFrame() {
+    const isLastFrame = this.currFrameIndex >= this.frames.length - 1;
+    return !(this.developerMode || (isLastFrame && !this.loopRotate));
   }
 
   frameIndexesHandler(currIndex) {
