@@ -1,0 +1,416 @@
+// TODO:
+// don't show cta if there is not data-cta in frame attribute list
+// don't show logo if there is not data-logo in frame attribute list
+// 
+
+class BannerAnimation {
+  constructor(parentElem) {
+    // params
+    this.developerMode = true;
+    this.nextFrameDelay = 2000;
+    this.loopRotate = true;
+    this.showCtaFirst = false;
+
+    // params from css
+    this.animationDuration = 0;
+    this.animationDelay = 0;
+
+    // logic properties
+    this.currFrameIndex = 0;
+    this.prevFrameIndex = 0;
+
+    this.prevLogoTitle = '';
+    this.currLogoTitle = '';
+
+    this.prevCtaTitle = '';
+    this.currCtaTitle = '';
+
+    // elements
+    this.parentElem = parentElem;
+
+    this.framesWrapper = null;
+    this.frames = null;
+
+    this.logoWrapper = null;
+    this.logos = null;
+
+    this.ctaButtonsWrapper = null;
+    this.ctaButtons = null;
+
+    // events name
+    this.initEventName = 'init';
+    this.frameSwitchingEventName = 'frameSwitching';
+    this.frameSwitchedEventName = 'frameSwitched';
+    this.frameInnerAnimEndEventName = 'frameInnerAnimEnd';
+    this.stepAnimEndEventName = 'stepAnimEnd';
+    this.ctaAnimEndEventName = 'ctaAnimEnd';
+
+    // events
+    this.initEvent = new CustomEvent(this.initEventName);
+    this.frameSwitchingEvent = new CustomEvent(this.frameSwitchingEventName);
+    this.frameSwitchedEvent = new CustomEvent(this.frameSwitchedEventName);
+    this.frameInnerAnimEndEvent = new CustomEvent(this.frameInnerAnimEndEventName);
+    this.stepEndEvent = new CustomEvent(this.stepAnimEndEventName);
+    this.ctaAnimEndEvent = new CustomEvent(this.ctaAnimEndEventName);
+
+    // data attributes
+    this.dataFrameIndex = 'data-frame-index';
+    this.dataStep = 'data-step';
+    this.dataLogo = 'data-logo';
+    this.dataCta = 'data-cta';
+    this.dataHref = 'data-href';
+    this.dataTrackerName = 'data-tracker-name';
+    this.dataTitle = 'data-title';
+
+    // css classes
+    this.startStepAnimationClassName = 'start-step-animation';
+    this.showClassName = 'show';
+    this.hideClassName = 'hide';
+
+    // css variables
+    this.animationDurationCssVariable = '--animation-duration';
+    this.animationDelayCssVariable = '--animation-delay';
+  }
+
+  // common methods
+  init() {
+    this.getNodeElements();
+    this.getCssVariables();
+    this.eventsHandler();
+
+    this.parentElem.dispatchEvent(this.initEvent);
+
+    this.showFrame(this.currFrameIndex);
+
+    if (this.developerMode) this.addDeveloperMode();
+  }
+
+  getNodeElements() {
+    this.getFrames();
+    this.getLogos();
+    this.getCtaButtons();
+  }
+
+  getCssVariables() {
+    const animationDuration = this.getCssProperty(this.parentElem, this.animationDurationCssVariable);
+    const animationDelay = this.getCssProperty(this.parentElem, this.animationDelayCssVariable);
+
+    this.animationDuration = parseFloat(animationDuration) * 1000;
+    this.animationDelay = parseFloat(animationDelay) * 1000;
+  }
+
+  eventsHandler() {
+    this.parentElem.addEventListener(this.initEventName, () => {
+      this.ctaHandler(this.currFrameIndex);
+    });
+
+    this.parentElem.addEventListener(this.frameSwitchingEventName, () => {
+      // console.log('frameSwitching');
+      this.ctaHandler(this.currFrameIndex);
+
+      const shouldUpdateCta = this.shouldUpdateCta();
+
+      if (shouldUpdateCta) {
+        this.hideCta(this.prevCtaTitle);
+      } else {
+        // console.log("don't change");
+      }
+    });
+
+    this.parentElem.addEventListener(this.frameSwitchedEventName, () => {
+      // console.log('frameSwitched');
+      const shouldUpdateCta = this.shouldUpdateCta();
+
+      this.resetStepClassnames(this.prevFrameIndex);
+
+      if (this.showCtaFirst && shouldUpdateCta) {
+        this.showCta(this.currCtaTitle, true);
+      } else {
+        this.startStepAnimation(this.currFrameIndex, true);
+      }
+    });
+
+    this.parentElem.addEventListener(this.frameInnerAnimEndEventName, () => {
+      console.log('frameInnerAnimEnd');
+    });
+
+    this.parentElem.addEventListener(this.stepAnimEndEventName, () => {
+      // console.log('stepAnimEnd');
+      const shouldUpdateCta = this.shouldUpdateCta();
+
+      if (this.showCtaFirst || !shouldUpdateCta) {
+        this.parentElem.dispatchEvent(this.frameInnerAnimEndEvent);
+      } else {
+        this.showCta(this.currCtaTitle, true);
+      }
+    });
+
+    this.parentElem.addEventListener(this.ctaAnimEndEventName, () => {
+      // console.log('ctaAnimEnd');
+      if (this.showCtaFirst) {
+        this.startStepAnimation(this.currFrameIndex, true);
+      } else {
+        this.parentElem.dispatchEvent(this.frameInnerAnimEndEvent);
+      }
+    });
+  }
+
+  // frame methods
+  getFrames() {
+    this.framesWrapper = this.parentElem.querySelector('#frames');
+    this.frames = this.framesWrapper.querySelectorAll('.frame');
+
+    this.frames.forEach((frame, index) => {
+      frame.setAttribute(this.dataFrameIndex, index);
+    });
+  }
+
+  nextFrame() {
+    const currFrameIndex = this.getFrameIndex(this.currFrameIndex + 1);
+    this.frameIndexesHandler(currFrameIndex);
+    this.switchFrame();
+  }
+
+  prevFrame() {
+    const currFrameIndex = this.getFrameIndex(this.currFrameIndex - 1);
+    this.frameIndexesHandler(currFrameIndex);
+
+    this.switchFrame();
+  }
+
+  switchFrame() {
+    this.parentElem.dispatchEvent(this.frameSwitchingEvent);
+
+    this.showFrame(this.currFrameIndex);
+    this.hideFrame(this.prevFrameIndex);
+  }
+
+  showFrame(index) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const frame = this.frames[index];
+    const { ctaTitle, logoTitle } = this.getFrameData(frame);
+
+    this.parentElem.setAttribute(this.dataFrameIndex, index);
+    this.parentElem.setAttribute(this.dataLogo, logoTitle);
+    this.parentElem.setAttribute(this.dataCta, ctaTitle);
+
+    frame.classList.add(this.showClassName);
+
+    frame.addEventListener(
+      'animationend',
+      () => {
+        this.parentElem.dispatchEvent(this.frameSwitchedEvent);
+        controller.abort();
+      },
+      { signal },
+    );
+  }
+
+  hideFrame(index) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const frame = this.frames[index];
+    frame.classList.add(this.hideClassName);
+
+    frame.addEventListener(
+      'animationend',
+      () => {
+        frame.classList.remove(this.showClassName);
+        frame.classList.remove(this.hideClassName);
+
+        controller.abort();
+      },
+      { signal },
+    );
+  }
+
+  frameIndexesHandler(currIndex) {
+    this.prevFrameIndex = this.currFrameIndex;
+    this.currFrameIndex = currIndex;
+  }
+
+  getFrameIndex(index) {
+    const lastFrameIndex = this.frames.length - 1;
+
+    if (index > lastFrameIndex) return 0;
+    if (index < 0) return lastFrameIndex;
+    return index;
+  }
+
+  getFrameData(frame) {
+    const logoTitle = frame.getAttribute(this.dataLogo);
+    const ctaTitle = frame.getAttribute(this.dataCta);
+
+    return {
+      logoTitle: logoTitle,
+      ctaTitle: ctaTitle,
+    };
+  }
+
+  // steps methods
+  startStepAnimation(frameIndex, startWithDelay = false) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const delay = startWithDelay ? this.animationDelay : 0;
+
+    const frame = this.frames[frameIndex];
+    const stepElements = frame.querySelectorAll(`[${this.dataStep}]:not([${[this.dataStep]}="0"])`);
+
+    if (stepElements.length === 0) return this.finishStepAnimation();
+
+    const stepElementsArray = Array.from(stepElements).sort((a, b) => a.dataset.step - b.dataset.step);
+
+    setTimeout(nextStep.bind(this), delay);
+
+    function nextStep(stepIndex = 0) {
+      const isLastStep = stepIndex >= stepElementsArray.length - 1;
+      const stepElem = stepElementsArray[stepIndex];
+
+      stepElem.classList.add(this.showClassName);
+
+      stepElem.addEventListener(
+        'animationend',
+        () => {
+          if (isLastStep) return this.finishStepAnimation(controller);
+          setTimeout(nextStep.bind(this, stepIndex + 1), this.animationDelay);
+        },
+        { signal },
+      );
+    }
+  }
+
+  finishStepAnimation(controller) {
+    this.parentElem.dispatchEvent(this.stepEndEvent);
+    if (controller) controller.abort();
+  }
+
+  resetStepClassnames(frameIndex) {
+    const frame = this.frames[frameIndex];
+    const stepElements = frame.querySelectorAll(`[${this.dataStep}]`);
+
+    stepElements.forEach(step => {
+      step.classList.remove(this.showClassName);
+    });
+  }
+
+  // logo methods
+  getLogos() {
+    this.logoWrapper = this.parentElem.querySelector('#logos');
+    this.logos = this.logoWrapper.querySelectorAll('.logo');
+  }
+
+  showLogo(logoTitle) {}
+
+  hideLogo(logoTitle) {}
+
+  // cta methods
+  getCtaButtons() {
+    this.ctaButtonsWrapper = this.parentElem.querySelector('#cta-buttons');
+    this.ctaButtons = this.ctaButtonsWrapper.querySelectorAll('.cta');
+  }
+
+  ctaHandler(frameIndex) {
+    const frame = this.frames[frameIndex];
+    const { ctaTitle } = this.getFrameData(frame);
+
+    this.prevCtaTitle = this.currCtaTitle;
+    this.currCtaTitle = ctaTitle;
+  }
+
+  shouldUpdateCta() {
+    return this.currCtaTitle !== this.prevCtaTitle;
+  }
+
+  showCta(ctaTitle, startWithDelay = false) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const cta = document.querySelector(`.cta[${this.dataTitle}="${ctaTitle}"]`);
+    const delay = startWithDelay ? this.animationDelay : 0;
+
+    setTimeout(() => {
+      cta.classList.add(this.showClassName);
+    }, delay);
+
+    cta.addEventListener(
+      'animationend',
+      () => {
+        this.parentElem.dispatchEvent(this.ctaAnimEndEvent);
+        controller.abort();
+      },
+      { signal },
+    );
+  }
+
+  hideCta(ctaTitle) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const cta = document.querySelector(`.cta[${this.dataTitle}="${ctaTitle}"]`);
+
+    cta.classList.add(this.hideClassName);
+
+    cta.addEventListener(
+      'animationend',
+      () => {
+        cta.classList.remove(this.hideClassName);
+        cta.classList.remove(this.showClassName);
+
+        controller.abort();
+      },
+      { signal },
+    );
+  }
+
+  // helpers
+  getCssProperty(elem, property) {
+    const elemStyles = getComputedStyle(elem);
+    return elemStyles.getPropertyValue(property);
+  }
+
+  // developer mode methods
+  addDeveloperMode() {
+    this.createNavigation();
+  }
+
+  createNavigation() {
+    const navBar = document.createElement('div');
+    const prevFrameBtn = document.createElement('div');
+    const nextFrameBtn = document.createElement('div');
+    const currFrameIndexElem = document.createElement('div');
+
+    navBar.classList.add('frame-navigation');
+
+    prevFrameBtn.classList.add('nav-btn', 'prev-btn');
+    prevFrameBtn.innerHTML = '&#8592;';
+
+    nextFrameBtn.classList.add('nav-btn', 'next-btn');
+    nextFrameBtn.innerHTML = '&#8594;';
+
+    currFrameIndexElem.classList.add('frame-index');
+    currFrameIndexElem.innerHTML = this.currFrameIndex + 1;
+
+    navBar.appendChild(prevFrameBtn);
+    navBar.appendChild(currFrameIndexElem);
+    navBar.appendChild(nextFrameBtn);
+
+    prevFrameBtn.addEventListener('click', () => {
+      this.prevFrame();
+      currFrameIndexElem.innerHTML = this.currFrameIndex + 1;
+    });
+
+    nextFrameBtn.addEventListener('click', () => {
+      this.nextFrame();
+      currFrameIndexElem.innerHTML = this.currFrameIndex + 1;
+    });
+
+    this.parentElem.appendChild(navBar);
+  }
+}
+
+const animationElem = document.querySelector('#animation');
+const bannerAnimation = new BannerAnimation(animationElem);
+bannerAnimation.init();

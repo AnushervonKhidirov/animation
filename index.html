@@ -1,53 +1,52 @@
-<!-- NOTE: html structure of animation banner
-you can add several logo and cta inside their parents and attach them to individual frame
-to attach cta to frame use "data-cta" attribute on frame with "data-title" attribute value of specific cta button
-to attach logo to frame use "data-logo" attribute on frame with "data-title" attribute value of specific logo
-to attach logo to frame use "data-logo" attribute on frame with "data-title" attribute value of specific logo
-cta/logo won't animation if cta/logo on current frame are the same as on previous frame -->
-
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <link rel="stylesheet" href="index.css" />
-        <link rel="stylesheet" href="300x600.css" />
-        <!-- <link rel="stylesheet" href="300x250.css" /> -->
-        <!-- <link rel="stylesheet" href="970x250.css" /> -->
-        <!-- <link rel="stylesheet" href="728x90.css" /> -->
-        <!-- <link rel="stylesheet" href="320x50.css" /> -->
-    </head>
-    <body>
-        <div id="animation">
-            <div id="frames">
-                <div class="frame frame-0" data-logo="THD logo" data-cta="Shop Now">
-                    <div class="text step-1"></div>
-                </div>
-
-                <div class="frame frame-1" data-logo="THD logo">
-                    <div class="text text-0 step-1"></div>
-                    <div class="text text-1 step-2"></div>
-                </div>
-
-                <div class="frame frame-2" data-logo="THD logo" data-cta="Shop Now">
-                    <div class="image step-1"></div>
-                </div>
-            </div>
-
-            <div id="logos">
-                <div class="logo" data-title="THD logo"></div>
-            </div>
-
-            <div id="cta-buttons">
-                <div class="cta" data-title="Shop Now"></div>
-                <div class="cta" data-title="Shop Now 2"></div>
-            </div>
-
-            <!-- NOTE: remove if no need -->
-            <div class="creeping-lines" data-text="BOXING WEEK on Appliances"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="animation.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="300x600.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="animation">
+      <div id="frames">
+        <div class="frame" data-logo="THD logo" data-cta="Shop Now">
+          frame 1 bg
+          <div class="text" data-step="1">frame 1 - step 1</div>
+          <div class="text" data-step="2">frame 1 - step 2</div>
+          <div class="text" data-step="3">frame 1 - step 3</div>
         </div>
 
-        <script src="index.js"></script>
-    </body>
+        <div class="frame" data-logo="THD logo" data-cta="Shop Now 2">
+          frame 2 bg
+          <div class="text" data-step="1">frame 2 - step 1</div>
+          <div class="text" data-step="2">frame 2 - step 2</div>
+        </div>
+
+        <div class="frame" data-logo="THD logo 2" data-cta="Shop Now 2">
+          frame 3 bg
+          <div class="text" data-step="1">frame 3 - step 1</div>
+          <div class="text" data-step="2">frame 3 - step 2</div>
+          <div class="text" data-step="3">frame 3 - step 3</div>
+        </div>
+
+        <div class="frame" data-logo="THD logo" data-cta="Shop Now">
+          frame 4 bg
+          <div class="text" data-step="1">frame 4 - step 1</div>
+        </div>
+      </div>
+
+      <div id="logos">
+        <div class="logo" data-title="THD logo">logo 1</div>
+        <div class="logo" data-title="THD logo 2">logo 2</div>
+      </div>
+
+      <div id="cta-buttons">
+        <div class="cta" data-title="Shop Now">Shop now 1</div>
+        <div class="cta" data-title="Shop Now 2">Shop now 2</div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
 </html>
