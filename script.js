@@ -96,11 +96,18 @@ class BannerAnimation {
 
   eventsHandler() {
     this.parentElem.addEventListener(this.initEventName, () => {
+      if (this.developerMode) {
+        console.log(`Animation banner initialized | event name: ${this.initEventName}`);
+      }
+
       this.ctaHandler(this.currFrameIndex);
     });
 
     this.parentElem.addEventListener(this.frameSwitchingEventName, () => {
-      // console.log('frameSwitching');
+      if (this.developerMode) {
+        console.log(`Start frame switching (from ${this.prevFrameIndex} to ${this.currFrameIndex}) | event name: ${this.frameSwitchingEventName}`);
+      }
+
       this.ctaHandler(this.currFrameIndex);
 
       const shouldUpdateCta = this.shouldUpdateCta();
@@ -109,7 +116,10 @@ class BannerAnimation {
     });
 
     this.parentElem.addEventListener(this.frameSwitchedEventName, () => {
-      // console.log('frameSwitched');
+      if (this.developerMode) {
+        console.log(`Frame switched (from ${this.prevFrameIndex} to ${this.currFrameIndex}) | event name: ${this.frameSwitchedEventName}`);
+      }
+
       const shouldUpdateCta = this.shouldUpdateCta();
 
       this.resetStepClassnames(this.prevFrameIndex);
@@ -122,11 +132,20 @@ class BannerAnimation {
     });
 
     this.parentElem.addEventListener(this.frameInnerAnimEndEventName, () => {
-      console.log('frameInnerAnimEnd');
+      if (this.developerMode) {
+        console.log(`All inner elements animation ended (steps & cta) | event name: ${this.frameInnerAnimEndEventName}`);
+      }
+
+      if (!this.developerMode) {
+        setTimeout(this.nextFrame.bind(this), this.nextFrameDelay);
+      }
     });
 
     this.parentElem.addEventListener(this.stepAnimEndEventName, () => {
-      // console.log('stepAnimEnd');
+      if (this.developerMode) {
+        console.log(`All steps animation ended | event name: ${this.stepAnimEndEventName}`);
+      }
+
       const shouldUpdateCta = this.shouldUpdateCta();
 
       if (this.showCtaFirst || !shouldUpdateCta) {
@@ -137,7 +156,10 @@ class BannerAnimation {
     });
 
     this.parentElem.addEventListener(this.ctaAnimEndEventName, () => {
-      // console.log('ctaAnimEnd');
+      if (this.developerMode) {
+        console.log(`CTA animation ended | event name: ${this.ctaAnimEndEventName}`);
+      }
+
       if (this.showCtaFirst) {
         this.startStepAnimation(this.currFrameIndex, true);
       } else {
@@ -165,7 +187,6 @@ class BannerAnimation {
   prevFrame() {
     const currFrameIndex = this.getFrameIndex(this.currFrameIndex - 1);
     this.frameIndexesHandler(currFrameIndex);
-
     this.switchFrame();
   }
 
