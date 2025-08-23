@@ -1,8 +1,3 @@
-// TODO:
-// don't show cta if there is not data-cta in frame attribute list
-// don't show logo if there is not data-logo in frame attribute list
-// 
-
 class BannerAnimation {
   constructor(parentElem) {
     // params
@@ -110,11 +105,7 @@ class BannerAnimation {
 
       const shouldUpdateCta = this.shouldUpdateCta();
 
-      if (shouldUpdateCta) {
-        this.hideCta(this.prevCtaTitle);
-      } else {
-        // console.log("don't change");
-      }
+      if (shouldUpdateCta) this.hideCta(this.prevCtaTitle);
     });
 
     this.parentElem.addEventListener(this.frameSwitchedEventName, () => {
@@ -325,6 +316,8 @@ class BannerAnimation {
   }
 
   showCta(ctaTitle, startWithDelay = false) {
+    if (!ctaTitle) return this.parentElem.dispatchEvent(this.ctaAnimEndEvent);
+
     const controller = new AbortController();
     const signal = controller.signal;
 
@@ -346,6 +339,8 @@ class BannerAnimation {
   }
 
   hideCta(ctaTitle) {
+    if (!ctaTitle) return;
+
     const controller = new AbortController();
     const signal = controller.signal;
 
