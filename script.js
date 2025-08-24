@@ -1,6 +1,6 @@
 class BannerAnimation {
   constructor(parentElem, options) {
-    // params
+    // options
     this.nextFrameDelay = options.nextFrameDelay;
     this.showCtaFirst = options.showCtaFirst;
     this.loopRotate = options.loopRotate;
@@ -10,7 +10,7 @@ class BannerAnimation {
     this.animationDuration = 0;
     this.animationDelay = 0;
 
-    // logic properties
+    // properties
     this.currFrameIndex = 0;
     this.prevFrameIndex = 0;
 
@@ -87,8 +87,8 @@ class BannerAnimation {
   }
 
   getCssVariables() {
-    const animationDuration = this.getCssProperty(this.parentElem, this.animationDurationCssVariable);
-    const animationDelay = this.getCssProperty(this.parentElem, this.animationDelayCssVariable);
+    const animationDuration = getCssProperty(this.parentElem, this.animationDurationCssVariable);
+    const animationDelay = getCssProperty(this.parentElem, this.animationDelayCssVariable);
 
     this.animationDuration = parseFloat(animationDuration) * 1000;
     this.animationDelay = parseFloat(animationDelay) * 1000;
@@ -454,12 +454,6 @@ class BannerAnimation {
     );
   }
 
-  // helpers
-  getCssProperty(elem, property) {
-    const elemStyles = getComputedStyle(elem);
-    return elemStyles.getPropertyValue(property);
-  }
-
   // developer mode methods
   addDeveloperMode() {
     this.createNavigation();
@@ -500,14 +494,113 @@ class BannerAnimation {
   }
 }
 
-const options = {
+class CreepingLine {
+  constructor(parentElem, options) {
+    // options
+    this.parentElem = parentElem;
+    this.text = options.text;
+    this.speed = options.speed;
+
+    // elements
+    this.wrapper = null;
+    this.topLine = null;
+    this.bottomLine = null;
+
+    // properties
+    this.axis = null;
+    this.position = 0;
+  }
+
+  init() {
+    this.addCreepingLine();
+    this.startAnimation();
+  }
+
+  addCreepingLine() {
+    this.wrapper = document.createElement('div');
+    this.wrapper.classList.add('creeping-line-wrapper');
+
+    this.parentElem.appendChild(this.wrapper);
+
+    this.axis = getCssProperty(this.wrapper, '--axis');
+
+    this.wrapper.classList.add(this.axis);
+
+    const creepingLine = document.createElement('div');
+    creepingLine.classList.add('creeping-line');
+
+    this.topLine = creepingLine.cloneNode(true);
+    this.topLine.classList.add('creeping-line-top');
+
+    this.bottomLine = creepingLine.cloneNode(true);
+    this.bottomLine.classList.add('creeping-line-bottom');
+
+    const text = document.createElement('span');
+    text.innerHTML = this.text;
+
+    this.wrapper.appendChild(this.topLine);
+    this.wrapper.appendChild(this.bottomLine);
+
+    const size = this.axis === 'vertical' ? 'offsetHeight' : 'offsetWidth';
+
+    let shouldAddText = true;
+
+    while (shouldAddText) {
+      this.topLine.appendChild(text.cloneNode(true));
+      this.bottomLine.appendChild(text.cloneNode(true));
+
+      if (Math.min(this.topLine.offsetWidth, this.bottomLine.offsetWidth) > this.parentElem[size] * 2) {
+        shouldAddText = false;
+        this.topLine.appendChild(text.cloneNode(true));
+        this.bottomLine.appendChild(text.cloneNode(true));
+      }
+    }
+  }
+
+  startAnimation() {
+    requestAnimationFrame(moveLine.bind(this, { topLine: this.topLine, bottomLine: this.bottomLine, axis: this.axis }));
+
+    function moveLine({ topLine, bottomLine, axis }) {
+      const textWidth = topLine.children[0].offsetWidth;
+      const gap = parseFloat(getCssProperty(topLine, 'gap'));
+      const maxWidth = textWidth + gap;
+      const rotateValue = axis === 'vertical' ? '-90deg' : '0';
+
+      if (this.position >= maxWidth) {
+        this.position = 0;
+      } else {
+        this.position += 1 * this.speed;
+      }
+
+      topLine.style.transform = `rotate(${rotateValue}) translateX(${this.position * -1}px)`;
+      bottomLine.style.transform = `rotate(${rotateValue}) translateX(${this.position}px)`;
+
+      requestAnimationFrame(moveLine.bind(this, { topLine, bottomLine, axis }));
+    }
+  }
+}
+
+function getCssProperty(elem, property) {
+  const elemStyles = getComputedStyle(elem);
+  return elemStyles.getPropertyValue(property);
+}
+
+const animationOptions = {
   nextFrameDelay: 2000,
   showCtaFirst: false,
   loopRotate: true,
   developerMode: false,
 };
 
+const creepingLineOptions = {
+  text: 'Hello World!',
+  speed: 1,
+};
+
 const animationElem = document.querySelector('#animation');
-const bannerAnimation = new BannerAnimation(animationElem, options);
+
+const bannerAnimation = new BannerAnimation(animationElem, animationOptions);
+const creepingLine = new CreepingLine(animationElem, creepingLineOptions);
 
 bannerAnimation.init();
+creepingLine.init();
