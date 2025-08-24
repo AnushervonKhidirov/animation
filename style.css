@@ -1,9 +1,5 @@
 body {
   position: relative;
-  display: grid;
-  height: 100vh;
-  justify-content: center;
-  align-content: center;
   margin: 0;
   padding: 0;
 }
@@ -102,4 +98,13 @@ body {
 
 .nav-btn {
   cursor: pointer;
+}
+
+/*  */
+.logo,
+.cta,
+.frame,
+.frame > * {
+  position: absolute;
+  inset: 0;
 }

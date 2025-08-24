@@ -1,11 +1,10 @@
 class BannerAnimation {
-  constructor(parentElem) {
+  constructor(parentElem, options) {
     // params
-    this.nextFrameDelay = 2000;
-    this.showCtaFirst = false;
-    this.loopRotate = true;
-
-    this.developerMode = true;
+    this.nextFrameDelay = options.nextFrameDelay;
+    this.showCtaFirst = options.showCtaFirst;
+    this.loopRotate = options.loopRotate;
+    this.developerMode = options.developerMode;
 
     // params from css
     this.animationDuration = 0;
@@ -501,6 +500,14 @@ class BannerAnimation {
   }
 }
 
+const options = {
+  nextFrameDelay: 2000,
+  showCtaFirst: false,
+  loopRotate: true,
+  developerMode: false,
+};
+
 const animationElem = document.querySelector('#animation');
-const bannerAnimation = new BannerAnimation(animationElem);
+const bannerAnimation = new BannerAnimation(animationElem, options);
+
 bannerAnimation.init();
