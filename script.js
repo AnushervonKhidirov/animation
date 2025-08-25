@@ -55,8 +55,6 @@ class BannerAnimation {
     this.dataStep = 'data-step';
     this.dataLogo = 'data-logo';
     this.dataCta = 'data-cta';
-    this.dataHref = 'data-href';
-    this.dataTrackerName = 'data-tracker-name';
     this.dataTitle = 'data-title';
 
     // css classes
@@ -594,7 +592,7 @@ const animationOptions = {
   nextFrameDelay: 2000,
   showCtaFirst: false,
   loopRotate: true,
-  developerMode: false,
+  developerMode: true,
 };
 
 const creepingLineOptions = {
