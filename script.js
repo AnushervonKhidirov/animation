@@ -6,6 +6,8 @@ class BannerAnimation {
     this.loopRotate = options.loopRotate;
     this.developerMode = options.developerMode;
 
+    this.ableToSwitchInDevMode = false;
+
     // params from css
     this.animationDuration = 0;
     this.animationDelay = 0;
@@ -100,6 +102,7 @@ class BannerAnimation {
         console.log(`Animation banner initialized | event name: ${this.initEventName}`);
       }
 
+      this.ableToSwitchInDevMode = false;
       this.logoHandler(this.currFrameIndex);
       this.ctaHandler(this.currFrameIndex);
 
@@ -116,6 +119,7 @@ class BannerAnimation {
         console.log(`Start frame switching (from ${this.prevFrameIndex} to ${this.currFrameIndex}) | event name: ${this.frameSwitchingEventName}`);
       }
 
+      this.ableToSwitchInDevMode = false;
       this.logoHandler(this.currFrameIndex);
       this.ctaHandler(this.currFrameIndex);
 
@@ -151,6 +155,7 @@ class BannerAnimation {
         console.log(`All inner elements animation ended (steps & cta) | event name: ${this.frameInnerAnimEndEventName}`);
       }
 
+      this.ableToSwitchInDevMode = true;
       const shouldSwitchFrame = this.shouldSwitchFrame();
 
       if (shouldSwitchFrame) {
@@ -481,13 +486,17 @@ class BannerAnimation {
     navBar.appendChild(nextFrameBtn);
 
     prevFrameBtn.addEventListener('click', () => {
-      this.prevFrame();
-      currFrameIndexElem.innerHTML = this.currFrameIndex + 1;
+      if (this.ableToSwitchInDevMode) {
+        this.prevFrame();
+        currFrameIndexElem.innerHTML = this.currFrameIndex + 1;
+      }
     });
 
     nextFrameBtn.addEventListener('click', () => {
-      this.nextFrame();
-      currFrameIndexElem.innerHTML = this.currFrameIndex + 1;
+      if (this.ableToSwitchInDevMode) {
+        this.nextFrame();
+        currFrameIndexElem.innerHTML = this.currFrameIndex + 1;
+      }
     });
 
     this.parentElem.appendChild(navBar);
@@ -589,7 +598,7 @@ const animationOptions = {
   nextFrameDelay: 2000,
   showCtaFirst: false,
   loopRotate: true,
-  developerMode: false,
+  developerMode: true,
 };
 
 const creepingLineOptions = {
