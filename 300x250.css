@@ -2,3 +2,86 @@
   width: 300px;
   height: 250px;
 }
+
+.logo {
+  background: url(images/300x250-logo.png) center no-repeat;
+  background-size: contain;
+}
+
+.cta[data-title='Shop Now'] {
+  background: url(images/300x250-cta-0.png) center no-repeat;
+  background-size: contain;
+}
+
+.cta[data-title='Learn More'] {
+  background: url(images/300x250-cta-1.png) center no-repeat;
+  background-size: contain;
+}
+
+#animation[data-frame-index='2'] .cta[data-title='Shop Now'] {
+  top: 15px;
+}
+
+/* frame 1 */
+.frame-0 {
+  background: url(images/300x250-frame-0-bg.jpg) center no-repeat;
+  background-size: cover;
+}
+
+.frame-0 .text-0 {
+  background: url(images/300x250-frame-0-text-0.png) center no-repeat;
+  background-size: contain;
+}
+
+.frame-0 .text-1 {
+  background: url(images/300x250-frame-0-text-1.png) center no-repeat;
+  background-size: contain;
+}
+
+.frame-0 .text-2 {
+  background: url(images/300x250-frame-0-text-2.png) center no-repeat;
+  background-size: contain;
+}
+
+/* frame 2 */
+.frame-1 {
+  background: url(images/300x250-frame-1-bg.jpg) center no-repeat;
+  background-size: cover;
+}
+
+.frame-1 .text-0 {
+  background: url(images/300x250-frame-1-text-0.png) center no-repeat;
+  background-size: contain;
+}
+
+.frame-1 .text-1 {
+  background: url(images/300x250-frame-1-text-1.png) center no-repeat;
+  background-size: contain;
+}
+
+/* frame 3 */
+.frame-2 {
+  background: url(images/300x250-frame-2-bg.jpg) center no-repeat;
+  background-size: cover;
+}
+
+.frame-2 .text-0 {
+  background: url(images/300x250-frame-2-text-0.png) center no-repeat;
+  background-size: contain;
+}
+
+/* frame 4 */
+.frame-3 {
+  background: url(images/300x250-frame-3-bg.jpg) center no-repeat;
+  background-size: cover;
+}
+
+.frame-3 .text-0 {
+  background: url(images/300x250-frame-3-text-0.png) center no-repeat;
+  background-size: contain;
+}
+
+.frame-3 .text-1 {
+  background: url(images/300x250-frame-3-text-1.png) center no-repeat;
+  background-size: contain;
+}

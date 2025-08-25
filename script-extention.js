@@ -590,6 +590,8 @@ class CreepingLine {
   }
 }
 
+const format = '300x600';
+
 const animationOptions = {
   nextFrameDelay: 2000,
   showCtaFirst: false,
@@ -602,7 +604,7 @@ const creepingLineOptions = {
   speed: 1,
 };
 
-const animationElem = document.querySelector('#animation');
+const animationElem = getAnimationBanner(format);
 
 if (animationElem) {
   const bannerAnimation = new BannerAnimation(animationElem, animationOptions);
@@ -615,4 +617,29 @@ if (animationElem) {
 function getCssProperty(elem, property) {
   const elemStyles = getComputedStyle(elem);
   return elemStyles.getPropertyValue(property);
+}
+
+function getAnimationBanner(format) {
+  const animationBanners = document.querySelectorAll('.animation');
+  let animationBanner = null;
+
+  for (let i = 0; i < animationBanners.length; i++) {
+    const banner = animationBanners[i];
+    const formats = banner.getAttribute('data-formats')?.replaceAll(' ', '').split(',');
+
+    if (formats && formats.includes(format)) {
+      animationBanner = banner;
+    }
+  }
+
+  if (!animationBanner) animationBanner = document.querySelector('.animation');
+
+  animationBanner.setAttribute('id', 'animation');
+  animationBanner.removeAttribute('data-formats');
+
+  document.querySelectorAll('.animation:not(#animation)').forEach(banner => {
+    banner.remove();
+  });
+
+  return animationBanner;
 }
