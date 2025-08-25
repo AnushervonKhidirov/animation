@@ -3,7 +3,7 @@
   height: 50px;
 }
 
-#animation {
+.frame-0 {
   background: url(images/320x50-bg.jpg) center no-repeat;
   background-size: cover;
 }
