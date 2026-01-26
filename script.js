@@ -90,8 +90,8 @@ class BannerAnimation {
     const animationDuration = getCssProperty(this.parentElem, this.animationDurationCssVariable);
     const animationDelay = getCssProperty(this.parentElem, this.animationDelayCssVariable);
 
-    this.animationDuration = parseFloat(animationDuration) * 1000;
-    this.animationDelay = parseFloat(animationDelay) * 1000;
+    this.animationDuration = Number.parseFloat(animationDuration) * 1000;
+    this.animationDelay = Number.parseFloat(animationDelay) * 1000;
   }
 
   eventsHandler() {
@@ -250,9 +250,7 @@ class BannerAnimation {
     frame.addEventListener(
       'animationend',
       () => {
-        frame.classList.remove(this.showClassName);
-        frame.classList.remove(this.hideClassName);
-
+        frame.classList.remove(this.showClassName, this.hideClassName);
         controller.abort();
       },
       { signal },
@@ -329,7 +327,7 @@ class BannerAnimation {
 
     stepElements.forEach(stepElem => {
       const stepNum = stepElem.getAttribute(this.dataStep);
-      if (stepNum > 0) stepNumbers[stepNum - 1] = parseInt(stepNum);
+      if (stepNum > 0) stepNumbers[stepNum - 1] = Number.parseInt(stepNum);
     });
 
     return stepNumbers.filter(stepNum => typeof stepNum === 'number');
@@ -386,9 +384,7 @@ class BannerAnimation {
     logo.addEventListener(
       'animationend',
       () => {
-        logo.classList.remove(this.hideClassName);
-        logo.classList.remove(this.showClassName);
-
+        logo.classList.remove(this.hideClassName, this.showClassName);
         controller.abort();
       },
       { signal },
@@ -449,9 +445,7 @@ class BannerAnimation {
     cta.addEventListener(
       'animationend',
       () => {
-        cta.classList.remove(this.hideClassName);
-        cta.classList.remove(this.showClassName);
-
+        cta.classList.remove(this.hideClassName, this.showClassName);
         controller.abort();
       },
       { signal },
@@ -570,7 +564,7 @@ class CreepingLine {
 
     function moveLine({ topLine, bottomLine, axis }) {
       const textWidth = topLine.children[0].offsetWidth;
-      const gap = parseFloat(getCssProperty(topLine, 'gap'));
+      const gap = Number.parseFloat(getCssProperty(topLine, 'gap'));
       const maxWidth = textWidth + gap;
       const rotateValue = axis === 'vertical' ? '-90deg' : '0';
 
