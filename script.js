@@ -57,6 +57,7 @@ class BannerAnimation {
         this.dataCta = 'data-cta';
         this.dataTitle = 'data-title';
         this.dataNextFrameDelay = 'data-next-frame-delay';
+        this.dataLocationWhite = 'data-location-white';
 
         // css classes
         this.startStepAnimationClassName = 'start-step-animation';
@@ -298,6 +299,7 @@ class BannerAnimation {
             ctaTitle: frame.getAttribute(this.dataCta),
             frameIndex: Number.parseInt(frame.getAttribute(this.dataFrameIndex)),
             nextFrameDelay: nextFrameDelay ? Number.parseInt(nextFrameDelay) : null,
+            locationWhite: typeof frame.getAttribute(this.dataLocationWhite) === 'string',
         };
     }
 
