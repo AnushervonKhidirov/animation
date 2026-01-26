@@ -469,7 +469,6 @@ class BannerAnimation {
 
     getEventDetails(e) {
         const frameData = this.getFrameData(this.frames[this.currFrameIndex]);
-        console.log(frameData);
 
         return {
             event: e?.type ?? 'unknown',
