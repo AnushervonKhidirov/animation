@@ -1,88 +1,88 @@
 #animation {
-  width: 728px;
-  height: 90px;
+    width: 728px;
+    height: 90px;
 }
 
 .logo {
-  background: url(images/728x90-logo.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-logo.png) center no-repeat;
+    background-size: contain;
 }
 
 .cta[data-title='Shop Now'] {
-  background: url(images/728x90-cta-0.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-cta-0.png) center no-repeat;
+    background-size: contain;
 }
 
 .cta[data-title='Learn More'] {
-  background: url(images/728x90-cta-1.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-cta-1.png) center no-repeat;
+    background-size: contain;
 }
 
 /* frame 1 */
 .frame-0 {
-  background: url(images/728x90-frame-0-bg.jpg) center no-repeat;
-  background-size: cover;
+    background: url(images/728x90-frame-0-bg.jpg) center no-repeat;
+    background-size: cover;
 }
 
 .frame-0 .text-0 {
-  background: url(images/728x90-frame-0-text-0.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-frame-0-text-0.png) center no-repeat;
+    background-size: contain;
 }
 
 .frame-0 .text-1 {
-  background: url(images/728x90-frame-0-text-1.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-frame-0-text-1.png) center no-repeat;
+    background-size: contain;
 }
 
 .frame-0 .text-2 {
-  background: url(images/728x90-frame-0-text-2.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-frame-0-text-2.png) center no-repeat;
+    background-size: contain;
 }
 
 /* frame 2 */
 .frame-1 {
-  background: url(images/728x90-frame-1-bg.jpg) center no-repeat;
-  background-size: cover;
+    background: url(images/728x90-frame-1-bg.jpg) center no-repeat;
+    background-size: cover;
 }
 
 .frame-1 .text-0 {
-  background: url(images/728x90-frame-1-text-0.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-frame-1-text-0.png) center no-repeat;
+    background-size: contain;
 }
 
 .frame-1 .text-1 {
-  background: url(images/728x90-frame-1-text-1.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-frame-1-text-1.png) center no-repeat;
+    background-size: contain;
 }
 
 /* frame 3 */
 .frame-2 {
-  background: url(images/728x90-frame-2-bg.jpg) center no-repeat;
-  background-size: cover;
+    background: url(images/728x90-frame-2-bg.jpg) center no-repeat;
+    background-size: cover;
 }
 
 .frame-2 .text-0 {
-  background: url(images/728x90-frame-2-text-0.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-frame-2-text-0.png) center no-repeat;
+    background-size: contain;
 }
 
 /* frame 4 */
 .frame-3 {
-  background: url(images/728x90-frame-3-bg.jpg) center no-repeat;
-  background-size: cover;
+    background: url(images/728x90-frame-3-bg.jpg) center no-repeat;
+    background-size: cover;
 }
 
 .frame-3 .text-0 {
-  background: url(images/728x90-frame-3-text-0.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-frame-3-text-0.png) center no-repeat;
+    background-size: contain;
 }
 
 .frame-3 .text-1 {
-  background: url(images/728x90-frame-3-text-1.png) center no-repeat;
-  background-size: contain;
+    background: url(images/728x90-frame-3-text-1.png) center no-repeat;
+    background-size: contain;
 }
 
 /* creeping lines */
 .creeping-line-wrapper {
-  --axis: vertical; /* horizontal | vertical */
+    --axis: vertical; /* horizontal | vertical */
 }

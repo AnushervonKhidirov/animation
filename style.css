@@ -1,168 +1,165 @@
 body {
-  position: relative;
-  margin: 0;
-  padding: 0;
+    position: relative;
+    margin: 0;
+    padding: 0;
 }
 
 #animation {
-  --animation-duration: 0.5s;
-  --animation-delay: 0.35s;
+    --animation-duration: 0.5s;
+    --animation-delay: 0.35s;
 
-  position: relative;
-  overflow: hidden;
-  user-select: none;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
 }
 
 /* logos */
 .logo {
-  opacity: 0;
-  animation-duration: var(--animation-duration);
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+    opacity: 0;
+    animation-duration: var(--animation-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
 }
 
 .logo.show {
-  animation-name: fadeIn;
+    animation-name: fadeIn;
 }
 
 .logo.hide {
-  animation-name: fadeOut;
+    animation-name: fadeOut;
 }
 
 /* cta buttons */
 .cta {
-  opacity: 0;
-  animation-duration: var(--animation-duration);
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
-  transition: all var(--animation-duration) var(--animation-delay);
+    opacity: 0;
+    transition: all var(--animation-duration) var(--animation-delay);
+    animation-duration: var(--animation-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
 }
 
 .cta.show {
-  animation-name: fadeInUp;
+    animation-name: fadeInUp;
 }
 
 .cta.hide {
-  animation-name: fadeOut;
+    animation-name: fadeOut;
 }
 
 /* frames */
 .frame {
-  opacity: 0;
-  animation-duration: var(--animation-duration);
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+    opacity: 0;
+    animation-duration: var(--animation-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
 }
 
 .frame.show {
-  animation-name: fadeIn;
+    animation-name: fadeIn;
 }
 
 .frame.hide {
-  animation-name: fadeOut;
+    animation-name: fadeOut;
 }
 
 /* steps */
 [data-step]:not([data-step='0']) {
-  opacity: 0;
+    opacity: 0;
+    animation-duration: var(--animation-duration);
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-out;
 }
 
 [data-step]:not([data-step='0']).show {
-  animation-name: fadeIn;
-}
-
-[data-step]:not([data-step='0']) {
-  animation-duration: var(--animation-duration);
-  animation-fill-mode: forwards;
-  animation-timing-function: ease-out;
+    animation-name: fadeIn;
 }
 
 /* creeping lines */
 .creeping-line-wrapper {
-  --axis: horizontal; /* horizontal | vertical */
-  --gap: 1em;
-  --height: 1.25em;
+    --axis: horizontal; /* horizontal | vertical */
+    --gap: 1em;
+    --height: 1.25em;
 
-  position: absolute;
-  inset: 0;
+    position: absolute;
+    inset: 0;
 }
 
 .creeping-line {
-  position: absolute;
-  display: inline-grid;
-  height: var(--height);
-  grid-auto-flow: column;
-  grid-auto-columns: max-content;
-  align-items: center;
-  gap: var(--gap);
-  background: #000;
-  color: #fff;
-  padding: 0 var(--gap);
-  opacity: 0;
-  animation: fadeIn var(--animation-duration) linear forwards;
+    position: absolute;
+    display: inline-grid;
+    height: var(--height);
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    align-items: center;
+    gap: var(--gap);
+    background: #000;
+    color: #fff;
+    padding: 0 var(--gap);
+    opacity: 0;
+    animation: fadeIn var(--animation-duration) linear forwards;
 }
 
 .creeping-line-wrapper.horizontal .creeping-line.creeping-line-top {
-  top: 0;
-  left: 0;
+    top: 0;
+    left: 0;
 }
 
 .creeping-line-wrapper.horizontal .creeping-line.creeping-line-bottom {
-  bottom: 0;
-  right: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .creeping-line-wrapper.vertical .creeping-line.creeping-line-top {
-  bottom: calc(var(--height) * -1);
-  left: 0;
-  transform: rotate(-90deg);
-  transform-origin: top left;
+    bottom: calc(var(--height) * -1);
+    left: 0;
+    transform: rotate(-90deg);
+    transform-origin: top left;
 }
 
 .creeping-line-wrapper.vertical .creeping-line.creeping-line-bottom {
-  top: 0;
-  right: var(--height);
-  transform: rotate(-90deg);
-  transform-origin: top right;
+    top: 0;
+    right: var(--height);
+    transform: rotate(-90deg);
+    transform-origin: top right;
 }
 
 .creeping-line.creeping-line-bottom span {
-  transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
 /* developer mode */
 .frame-navigation {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  display: grid;
-  width: 80%;
-  max-width: 150px;
-  grid-auto-flow: column;
-  justify-content: space-evenly;
-  background-color: rgba(0, 0, 0, 0.75);
-  color: #fff;
-  border: 1px solid #fff;
-  border-bottom: none;
-  border-radius: 7px 7px 0 0;
-  padding: 5px 0;
-  box-sizing: border-box;
-  transform: translate(-50%);
-  z-index: 9;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    display: grid;
+    width: 80%;
+    max-width: 150px;
+    grid-auto-flow: column;
+    justify-content: space-evenly;
+    background-color: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    border: 1px solid #fff;
+    border-bottom: none;
+    border-radius: 7px 7px 0 0;
+    padding: 5px 0;
+    box-sizing: border-box;
+    transform: translate(-50%);
+    z-index: 9;
 }
 
 .nav-btn {
-  cursor: pointer;
+    cursor: pointer;
 }
 
-/*  */
+/* your styles */
 .logo,
 .cta,
 .frame,
 .frame > * {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

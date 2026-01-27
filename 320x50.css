@@ -1,15 +1,15 @@
 #animation {
-  width: 320px;
-  height: 50px;
+    width: 320px;
+    height: 50px;
 }
 
 .frame-0 {
-  background: url(images/320x50-bg.jpg) center no-repeat;
-  background-size: cover;
+    background: url(images/320x50-bg.jpg) center no-repeat;
+    background-size: cover;
 }
 
 /* creeping lines */
 .creeping-line-wrapper {
-  --axis: vertical; /* horizontal | vertical */
-  font-size: 10px;
+    --axis: vertical; /* horizontal | vertical */
+    font-size: 10px;
 }
