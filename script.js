@@ -13,6 +13,8 @@ class BannerAnimation {
         this.animationDelay = 0;
 
         // properties
+        this.currRound = 0;
+
         this.currFrameIndex = 0;
         this.prevFrameIndex = 0;
 
@@ -52,6 +54,8 @@ class BannerAnimation {
 
         // data attributes
         this.dataFrameIndex = 'data-frame-index';
+        this.dataRound = 'data-round';
+        this.dataFirstRound = 'data-first-round';
         this.dataStep = 'data-step';
         this.dataLogo = 'data-logo';
         this.dataCta = 'data-cta';
@@ -102,6 +106,11 @@ class BannerAnimation {
                 console.log(`Animation banner initialized | event name: ${this.initEventName}`);
             }
 
+            if (this.loopRotate) {
+                this.parentElem.setAttribute(this.dataFirstRound, true);
+                this.parentElem.setAttribute(this.dataRound, this.currRound);
+            }
+
             this.ableToSwitchInDevMode = false;
             this.logoHandler(this.currFrameIndex);
             this.ctaHandler(this.currFrameIndex);
@@ -119,6 +128,12 @@ class BannerAnimation {
         this.parentElem.addEventListener(this.frameSwitchingEventName, e => {
             if (this.developerMode) {
                 console.log(`Start frame switching (from ${this.prevFrameIndex} to ${this.currFrameIndex}) | event name: ${this.frameSwitchingEventName}`);
+            }
+
+            if (this.loopRotate && this.currFrameIndex === 0 && this.prevFrameIndex === this.frames.length - 1) {
+                this.currRound += 1
+                this.parentElem.setAttribute(this.dataFirstRound, false);
+                this.parentElem.setAttribute(this.dataRound, this.currRound);
             }
 
             this.ableToSwitchInDevMode = false;
@@ -616,7 +631,7 @@ const animationOptions = {
     nextFrameDelay: 2000,
     showCtaFirst: false,
     loopRotate: true,
-    developerMode: false,
+    developerMode: true,
 };
 
 const creepingLineOptions = {
