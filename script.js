@@ -131,7 +131,7 @@ class BannerAnimation {
             }
 
             if (this.loopRotate && this.currFrameIndex === 0 && this.prevFrameIndex === this.frames.length - 1) {
-                this.currRound += 1
+                this.currRound += 1;
                 this.parentElem.setAttribute(this.dataFirstRound, false);
                 this.parentElem.setAttribute(this.dataRound, this.currRound);
             }
@@ -542,11 +542,12 @@ class BannerAnimation {
 }
 
 class CreepingLine {
-    constructor(parentElem, options) {
+    constructor(parentElem, text, index = 0) {
         // options
         this.parentElem = parentElem;
-        this.text = options.text;
-        this.speed = options.speed;
+        this.text = text;
+        this.speed = 1;
+        this.index = index;
 
         // elements
         this.wrapper = null;
@@ -566,6 +567,7 @@ class CreepingLine {
     addCreepingLine() {
         this.wrapper = document.createElement('div');
         this.wrapper.classList.add('creeping-line-wrapper');
+        this.wrapper.setAttribute('data-index', this.index);
 
         this.parentElem.appendChild(this.wrapper);
 
@@ -634,19 +636,20 @@ const animationOptions = {
     developerMode: true,
 };
 
-const creepingLineOptions = {
-    text: 'Hello World!',
-    speed: 1,
-};
+const creepingLinesText = 'Hello World 1; Hello World 2';
 
 const animationElem = document.querySelector('#animation');
 
 if (animationElem) {
-    const bannerAnimation = new BannerAnimation(animationElem, animationOptions);
-    const creepingLine = new CreepingLine(animationElem, creepingLineOptions);
+    const creepingLines = creepingLinesText.split(';');
 
+    const bannerAnimation = new BannerAnimation(animationElem, animationOptions);
     bannerAnimation.init();
-    creepingLine.init();
+
+    for (const [index, creepingLineText] of creepingLines.entries()) {
+        const creepingLine = new CreepingLine(animationElem, creepingLineText.trim(), index);
+        creepingLine.init();
+    }
 }
 
 function getCssProperty(elem, property) {
