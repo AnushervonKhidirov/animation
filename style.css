@@ -123,7 +123,7 @@ body {
     transform-origin: top right;
 }
 
-.creeping-line.creeping-line-bottom span {
+.creeping-line.creeping-line-bottom > span {
     transform: rotate(180deg);
 }
 
