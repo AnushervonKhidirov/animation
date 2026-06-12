@@ -223,9 +223,9 @@ class BannerAnimation {
         this.framesWrapper = this.parentElem.querySelector('#frames');
         this.frames = this.framesWrapper.querySelectorAll('.frame');
 
-        this.frames.forEach((frame, index) => {
+        for (const [index, frame] of this.frames.entries()) {
             frame.setAttribute(this.dataFrameIndex, index);
-        });
+        }
     }
 
     nextFrame() {
@@ -339,7 +339,7 @@ class BannerAnimation {
 
             const stepElements = frame.querySelectorAll(`[${this.dataStep}="${stepNum}"]`);
 
-            stepElements.forEach(stepElem => {
+            for (const stepElem of stepElements) {
                 stepElem.classList.add(this.showClassName);
 
                 stepElem.addEventListener(
@@ -350,17 +350,17 @@ class BannerAnimation {
                     },
                     { signal },
                 );
-            });
+            }
         }
     }
 
     getStepNumbers(stepElements) {
         const stepNumbers = [];
 
-        stepElements.forEach(stepElem => {
+        for (const stepElem of stepElements) {
             const stepNum = stepElem.getAttribute(this.dataStep);
             if (stepNum > 0) stepNumbers[stepNum - 1] = Number.parseInt(stepNum);
-        });
+        }
 
         return stepNumbers.filter(stepNum => typeof stepNum === 'number');
     }
@@ -374,9 +374,9 @@ class BannerAnimation {
         const frame = this.frames[frameIndex];
         const stepElements = frame.querySelectorAll(`[${this.dataStep}]`);
 
-        stepElements.forEach(step => {
-            step.classList.remove(this.showClassName);
-        });
+        for (const stepElem of stepElements) {
+            stepElem.classList.remove(this.showClassName);
+        }
     }
 
     // logo methods
